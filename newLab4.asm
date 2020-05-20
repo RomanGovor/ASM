@@ -113,14 +113,14 @@ Random                          db  97h
 Random_low                      db  ?
 Random_high                     db  ?   
 
-;/-----------------------игровые сообщения------------------------------------/              
+;/-----------------------ГЁГЈГ°Г®ГўГ»ГҐ Г±Г®Г®ГЎГ№ГҐГ­ГЁГї------------------------------------/              
 Hello_str                       db   "HELLO! PLEASE, CHOOSE...",                                           0Ah,0Dh,    "$"                        
 Easy_str                        db   "1. Easy: play up to 10 points with 4 ghosts!",                       0Ah,0Dh,    "$"
 Medium_str                      db   "2. Medium: play up to 15 poits with 5 ghosts!",                      0Ah,0Dh,    "$"   
 Hard_str                        db   "3. Hard: play up to 20 points with 6 ghosts!",                       0Ah,0Dh,    "$"
 Unreal_str                      db   "4. ", 02h," UNREAL ", 02h ,": play up to 30 points with 7 ghosts!",  0Ah,0Dh,    "$"
 
-;/-----------------------параметры сложностей--------------------------------/ 
+;/-----------------------ГЇГ Г°Г Г¬ГҐГІГ°Г» Г±Г«Г®Г¦Г­Г®Г±ГІГҐГ©--------------------------------/ 
 Easy_apples                     equ 10
 Easy_chosts                     equ 4
 Easy_pause                      equ 65000
@@ -141,7 +141,7 @@ Unreal_delay_ghosts             equ 2
 
 Game_loop_pause                 dw  65000   
 
-;/-----------------------работа с призраками----------------------------------/    
+;/-----------------------Г°Г ГЎГ®ГІГ  Г± ГЇГ°ГЁГ§Г°Г ГЄГ Г¬ГЁ----------------------------------/    
 Max_count_of_ghosts             dw  4 
 Ghosts_max_delay_moving         db  3
 Ghosts_delay_counter            db  ?
@@ -155,19 +155,19 @@ Ghost_green                     dw  0A11h, 0A12h ;0000101011011110b, 00001010110
 Ghost_purple                    dw  0D11h, 0D12h ;0000110111011110b, 0000110111011101b
 Ghost_gray                      dw  0F11h, 0F12h ;0000111111011110b, 0000011111011101b             
     
-;/-----------------------работа с пакманом----------------------------------/    
+;/-----------------------Г°Г ГЎГ®ГІГ  Г± ГЇГ ГЄГ¬Г Г­Г®Г¬----------------------------------/    
 Pacman_position_X               db  ?
 Pacman_position_Y               db  ?
 Pacman_current_direction        db  ?
 Pacman_next_direction           db  ? 
 Flag_moving_pacman              db  0   
-                             ;желтый;|элемент; 0Е - Желтый на черном
+                             ;Г¦ГҐГ«ГІГ»Г©;|ГЅГ«ГҐГ¬ГҐГ­ГІ; 0Г… - Г†ГҐГ«ГІГ»Г© Г­Г  Г·ГҐГ°Г­Г®Г¬
 Pacman_UP                       dw  0E5Ch, 0E2Fh  ;0000111001011100b, 0000111000101111b ; "\/"  
 Pacman_DOWN                     dw  0E2Fh, 0E5Ch  ;0000111000101111b, 0000111001011100b ; "/\"
 Pacman_LEFT                     dw  0E3Eh, 0E4Fh  ;0000111000111110b, 0000111000101101b ; ">0" 
 Pacman_RIGHT                    dw  0E4Fh, 0E3Ch  ;0000111000101101b, 0000111000111100b ; "0<"   
 
-;/-----------------------работа с яблоком----------------------------------/
+;/-----------------------Г°Г ГЎГ®ГІГ  Г± ГїГЎГ«Г®ГЄГ®Г¬----------------------------------/
 Max_count_of_apples             db  ?     
 Count_of_apple                  db  0
 Apple_position_X                db  ?
@@ -175,7 +175,7 @@ Apple_position_Y                db  ?
 Apple                           dw  0C3Ch, 0C3Eh ;0000110000101000b, 0000110000101001b ; red "<>"  on black 
 Apple_counting_str              dw  4 dup(?)   
 
-;/------------------------работа с очками и жизнями------------------------/
+;/------------------------Г°Г ГЎГ®ГІГ  Г± Г®Г·ГЄГ Г¬ГЁ ГЁ Г¦ГЁГ§Г­ГїГ¬ГЁ------------------------/
 Count_of_health                 db  3
 Health_position_X               equ 35
 Health_position_Y               equ 22
@@ -201,23 +201,23 @@ start:
     mov Count_of_health, 3        
     call Select_difficulty 
         
-    mov ax, 0B800h                       ;Область видеопамяти
-    mov es, ax                           ;Передача в es адреса видеопамяти
+    mov ax, 0B800h                       ;ГЋГЎГ«Г Г±ГІГј ГўГЁГ¤ГҐГ®ГЇГ Г¬ГїГІГЁ
+    mov es, ax                           ;ГЏГҐГ°ГҐГ¤Г Г·Г  Гў es Г Г¤Г°ГҐГ±Г  ГўГЁГ¤ГҐГ®ГЇГ Г¬ГїГІГЁ
 
 Return_to_start:                             
-    mov Count_of_apple, 0                ;Обнуление очков 
+    mov Count_of_apple, 0                ;ГЋГЎГ­ГіГ«ГҐГ­ГЁГҐ Г®Г·ГЄГ®Гў 
     Set_screen   
-    call Field_display                   ;Отрисовка игрового поля
-    call Draw_score_string               ;Отрисовка сообщения счета    
-    call Draw_count_of_heart             ;Появление числа жизней
-    call Pacman_appearance               ;Появление пакмана
-    call Ghosts_appearance               ;Появление призраков
-    call Apple_appearance                ;Появление яблока
+    call Field_display                   ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  ГЁГЈГ°Г®ГўГ®ГЈГ® ГЇГ®Г«Гї
+    call Draw_score_string               ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  Г±Г®Г®ГЎГ№ГҐГ­ГЁГї Г±Г·ГҐГІГ     
+    call Draw_count_of_heart             ;ГЏГ®ГїГўГ«ГҐГ­ГЁГҐ Г·ГЁГ±Г«Г  Г¦ГЁГ§Г­ГҐГ©
+    call Pacman_appearance               ;ГЏГ®ГїГўГ«ГҐГ­ГЁГҐ ГЇГ ГЄГ¬Г Г­Г 
+    call Ghosts_appearance               ;ГЏГ®ГїГўГ«ГҐГ­ГЁГҐ ГЇГ°ГЁГ§Г°Г ГЄГ®Гў
+    call Apple_appearance                ;ГЏГ®ГїГўГ«ГҐГ­ГЁГҐ ГїГЎГ«Г®ГЄГ 
     
 Main_cycle:
     Waiting
-    call Moving_pacman                   ;Движение пакмана
-    call Moving_chosts                   ;Движение призрака
+    call Moving_pacman                   ;Г„ГўГЁГ¦ГҐГ­ГЁГҐ ГЇГ ГЄГ¬Г Г­Г 
+    call Moving_chosts                   ;Г„ГўГЁГ¦ГҐГ­ГЁГҐ ГЇГ°ГЁГ§Г°Г ГЄГ 
 jmp Main_cycle       
 
 End_of_game: 
@@ -227,29 +227,29 @@ End_of_game:
     
     
 ;/------------------------------------------------------------------------------/                
-Field_display  proc                  ;ОТРИСОВКА ПОЛЯ              
+Field_display  proc                  ;ГЋГ’ГђГ€Г‘ГЋГ‚ГЉГЂ ГЏГЋГ‹Гџ              
     push si
     push di
     push ax
     push cx
     
-    mov si, offset Screen_matrix     ;Передача поля
-    mov di, Offset_position_on_field ;Передача смещения одной полосы              
-    ;mov cx, Field_length_Y          ;Передача размера длины поля
-    mov cx, Field_length             ;Передача размера длины поля
+    mov si, offset Screen_matrix     ;ГЏГҐГ°ГҐГ¤Г Г·Г  ГЇГ®Г«Гї
+    mov di, Offset_position_on_field ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г¬ГҐГ№ГҐГ­ГЁГї Г®Г¤Г­Г®Г© ГЇГ®Г«Г®Г±Г»              
+    ;mov cx, Field_length_Y          ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г°Г Г§Г¬ГҐГ°Г  Г¤Г«ГЁГ­Г» ГЇГ®Г«Гї
+    mov cx, Field_length             ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г°Г Г§Г¬ГҐГ°Г  Г¤Г«ГЁГ­Г» ГЇГ®Г«Гї
      
 Loop_render_by_string:              
     push cx
-    ;mov cx, Field_length_X          ;Цикл отрисовки по строкам
-    mov cx, Field_length             ;Цикл отрисовки по строкам
+    ;mov cx, Field_length_X          ;Г–ГЁГЄГ« Г®ГІГ°ГЁГ±Г®ГўГЄГЁ ГЇГ® Г±ГІГ°Г®ГЄГ Г¬
+    mov cx, Field_length             ;Г–ГЁГЄГ« Г®ГІГ°ГЁГ±Г®ГўГЄГЁ ГЇГ® Г±ГІГ°Г®ГЄГ Г¬
     
 Loop_render_by_columns:
     push cx            
-    mov ax, ds:[si]                  ;Передача пикселя
+    mov ax, ds:[si]                  ;ГЏГҐГ°ГҐГ¤Г Г·Г  ГЇГЁГЄГ±ГҐГ«Гї
     mov cx, 2    
         
-Loop_render_one_element:             ;Отрисовка элемента
-    mov word ptr es:[di], ax         ;Указание что следует использовать как слово
+Loop_render_one_element:             ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  ГЅГ«ГҐГ¬ГҐГ­ГІГ 
+    mov word ptr es:[di], ax         ;Г“ГЄГ Г§Г Г­ГЁГҐ Г·ГІГ® Г±Г«ГҐГ¤ГіГҐГІ ГЁГ±ГЇГ®Г«ГјГ§Г®ГўГ ГІГј ГЄГ ГЄ Г±Г«Г®ГўГ®
     add di, 2
 loop Loop_render_one_element       
 
@@ -257,8 +257,8 @@ loop Loop_render_one_element
     pop cx
 loop Loop_render_by_columns   
     
-    add di, 2 * 2 * (Max_window_size_X - Field_length) ;Переход на новую строку
-    ;add di, 2 * 2 * (Max_window_size_X - Field_length_X) ;Переход на новую строку
+    add di, 2 * 2 * (Max_window_size_X - Field_length) ;ГЏГҐГ°ГҐГµГ®Г¤ Г­Г  Г­Г®ГўГіГѕ Г±ГІГ°Г®ГЄГі
+    ;add di, 2 * 2 * (Max_window_size_X - Field_length_X) ;ГЏГҐГ°ГҐГµГ®Г¤ Г­Г  Г­Г®ГўГіГѕ Г±ГІГ°Г®ГЄГі
     pop cx
 loop Loop_render_by_string
    
@@ -270,13 +270,13 @@ loop Loop_render_by_string
 Field_display  endp
                              
 ;/-------------------------------------------------------------------/
-Draw_score_string proc             ;ПЕЧАТЬ СТРОКИ СЧЕТА
-    mov si, offset Score_str       ;Передача строки
-    mov di, Total_score_str_offset ;Передача смещения 
-    mov cx, Score_str_length       ;Получение длины строки
+Draw_score_string proc             ;ГЏГ…Г—ГЂГ’Гњ Г‘Г’ГђГЋГЉГ€ Г‘Г—Г…Г’ГЂ
+    mov si, offset Score_str       ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±ГІГ°Г®ГЄГЁ
+    mov di, Total_score_str_offset ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г¬ГҐГ№ГҐГ­ГЁГї 
+    mov cx, Score_str_length       ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГІГ°Г®ГЄГЁ
 
 Draw_score_loop:
-    mov ah, Green_colour           ;00001010b(зеленый цвет)
+    mov ah, Green_colour           ;00001010b(Г§ГҐГ«ГҐГ­Г»Г© Г¶ГўГҐГІ)
     mov al, [si]
     mov word ptr es:[di], ax
     inc si
@@ -286,13 +286,13 @@ loop Draw_score_loop
 Draw_score_string endp
 
 ;/-------------------------------------------------------------------/
-Draw_lose_string proc              ;ПЕЧАТЬ СТРОКИ ПРОИГРЫША
-    mov si, offset You_lose_str    ;Передача строки
-    mov di, Total_lose_str_offset  ;Передача смещения
-    mov cx, Lose_length            ;Получение длины строки
+Draw_lose_string proc              ;ГЏГ…Г—ГЂГ’Гњ Г‘Г’ГђГЋГЉГ€ ГЏГђГЋГ€ГѓГђГ›ГГЂ
+    mov si, offset You_lose_str    ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±ГІГ°Г®ГЄГЁ
+    mov di, Total_lose_str_offset  ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г¬ГҐГ№ГҐГ­ГЁГї
+    mov cx, Lose_length            ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГІГ°Г®ГЄГЁ
 
 Draw_lose_loop:
-    mov ah, Red_colour             ;000000100b(красный цвет)
+    mov ah, Red_colour             ;000000100b(ГЄГ°Г Г±Г­Г»Г© Г¶ГўГҐГІ)
     mov al, [si]
     mov word ptr es:[di], ax
     inc si
@@ -302,12 +302,12 @@ loop Draw_lose_loop
 Draw_lose_string endp  
 
 ;/-------------------------------------------------------------------/
-Draw_pause_string proc              ;ПЕЧАТЬ СТРОКИ ПАУЗЫ
+Draw_pause_string proc              ;ГЏГ…Г—ГЂГ’Гњ Г‘Г’ГђГЋГЉГ€ ГЏГЂГ“Г‡Г›
    
 Draw_pause:   
-    mov si, offset Pause_str        ;Передача строки
-    mov di, Total_pause_str_offset  ;Передача смещения
-    mov cx, Pause_length            ;Получение длины строки
+    mov si, offset Pause_str        ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±ГІГ°Г®ГЄГЁ
+    mov di, Total_pause_str_offset  ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г¬ГҐГ№ГҐГ­ГЁГї
+    mov cx, Pause_length            ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГІГ°Г®ГЄГЁ
 
 Draw_pause_loop:
     mov ah, Brown_colour              
@@ -319,9 +319,9 @@ loop Draw_pause_loop
         
         
 Draw_key_enter:
-    mov si, offset Enter_str        ;Передача строки
-    mov di, Total_enter_str_offset  ;Передача смещения
-    mov cx, Enter_length            ;Получение длины строки
+    mov si, offset Enter_str        ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±ГІГ°Г®ГЄГЁ
+    mov di, Total_enter_str_offset  ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г¬ГҐГ№ГҐГ­ГЁГї
+    mov cx, Enter_length            ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГІГ°Г®ГЄГЁ
 
 Draw_enter_loop:
     mov ah, White_colour              
@@ -335,12 +335,12 @@ loop Draw_enter_loop
 Draw_pause_string endp 
 
 ;/-------------------------------------------------------------------/
-Draw_reset_quit_str proc           ;ОТРИСОВКА КНОПОК ОЖИДАНИЯ  И ВЫХОДА НАЖАТИЕ 
+Draw_reset_quit_str proc           ;ГЋГ’ГђГ€Г‘ГЋГ‚ГЉГЂ ГЉГЌГЋГЏГЋГЉ ГЋГ†Г€Г„ГЂГЌГ€Гџ  Г€ Г‚Г›Г•ГЋГ„ГЂ ГЌГЂГ†ГЂГ’Г€Г… 
     
 Draw_key_quit:
-    mov si, offset Quit_str        ;Передача строки
-    mov di, Total_quit_str_offset  ;Передача смещения
-    mov cx, Quit_length            ;Получение длины строки
+    mov si, offset Quit_str        ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±ГІГ°Г®ГЄГЁ
+    mov di, Total_quit_str_offset  ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г¬ГҐГ№ГҐГ­ГЁГї
+    mov cx, Quit_length            ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГІГ°Г®ГЄГЁ
 
 Draw_quit_loop:
     mov ah, White_colour              
@@ -352,9 +352,9 @@ loop Draw_quit_loop
        
        
 Draw_key_reset:
-    mov si, offset Reset_str        ;Передача строки
-    mov di, Total_reset_str_offset  ;Передача смещения
-    mov cx, Reset_length            ;Получение длины строки
+    mov si, offset Reset_str        ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±ГІГ°Г®ГЄГЁ
+    mov di, Total_reset_str_offset  ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г¬ГҐГ№ГҐГ­ГЁГї
+    mov cx, Reset_length            ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГІГ°Г®ГЄГЁ
 
 Draw_reset_loop:
     mov ah, White_colour              
@@ -368,11 +368,11 @@ loop Draw_reset_loop
 Draw_reset_quit_str endp    
 
 ;/-------------------------------------------------------------------/
-Draw_clean_pause_string proc        ;ОЧИСТКА СТРОКИ ПАУЗЫ
+Draw_clean_pause_string proc        ;ГЋГ—Г€Г‘Г’ГЉГЂ Г‘Г’ГђГЋГЉГ€ ГЏГЂГ“Г‡Г›
 
 Clean_pause:    
-    mov di, Total_pause_str_offset  ;Передача смещения
-    mov cx, Pause_length            ;Получение длины строки
+    mov di, Total_pause_str_offset  ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г¬ГҐГ№ГҐГ­ГЁГї
+    mov cx, Pause_length            ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГІГ°Г®ГЄГЁ
 
 Clean_pause_loop:  
     mov word ptr es:[di], em
@@ -381,8 +381,8 @@ loop Clean_pause_loop
         
         
 Clean_enter:    
-    mov di, Total_enter_str_offset  ;Передача смещения
-    mov cx, Enter_length            ;Получение длины строки
+    mov di, Total_enter_str_offset  ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г¬ГҐГ№ГҐГ­ГЁГї
+    mov cx, Enter_length            ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГІГ°Г®ГЄГЁ
 
 Clean_enter_loop:  
     mov word ptr es:[di], em
@@ -391,8 +391,8 @@ loop Clean_enter_loop
      
      
 Clean_quit:    
-    mov di, Total_quit_str_offset  ;Передача смещения
-    mov cx, Quit_length            ;Получение длины строки
+    mov di, Total_quit_str_offset  ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г¬ГҐГ№ГҐГ­ГЁГї
+    mov cx, Quit_length            ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГІГ°Г®ГЄГЁ
 
 Clean_quit_loop:  
     mov word ptr es:[di], em
@@ -401,8 +401,8 @@ loop Clean_quit_loop
         
         
 Clean_reset:    
-    mov di, Total_reset_str_offset  ;Передача смещения
-    mov cx, Reset_length            ;Получение длины строки
+    mov di, Total_reset_str_offset  ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г¬ГҐГ№ГҐГ­ГЁГї
+    mov cx, Reset_length            ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГІГ°Г®ГЄГЁ
 
 Clean_reset_loop:  
     mov word ptr es:[di], em
@@ -413,10 +413,10 @@ loop Clean_reset_loop
 Draw_clean_pause_string endp 
 
 ;/-------------------------------------------------------------------/
-Draw_win_string proc               ;ПЕЧАТЬ СТРОКИ ВЫИГРЫША
-    mov si, offset You_win_str     ;Передача строки
-    mov di, Total_win_str_offset   ;Передача смещения
-    mov cx, Win_length             ;Получение длины строки
+Draw_win_string proc               ;ГЏГ…Г—ГЂГ’Гњ Г‘Г’ГђГЋГЉГ€ Г‚Г›Г€ГѓГђГ›ГГЂ
+    mov si, offset You_win_str     ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±ГІГ°Г®ГЄГЁ
+    mov di, Total_win_str_offset   ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г¬ГҐГ№ГҐГ­ГЁГї
+    mov cx, Win_length             ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г«ГЁГ­Г» Г±ГІГ°Г®ГЄГЁ
 
 Draw_win_loop:
     mov ah, Purple_colour          
@@ -429,20 +429,20 @@ loop Draw_win_loop
 Draw_win_string endp 
 
 ;/------------------------------------------------------------------/                     
-Set_screen macro                ;УСТАНОВКА ОКНА И ВИДЕОРЕЖИМА
+Set_screen macro                ;Г“Г‘Г’ГЂГЌГЋГ‚ГЉГЂ ГЋГЉГЌГЂ Г€ Г‚Г€Г„Г…ГЋГђГ…Г†Г€ГЊГЂ
     push ax
-    mov ax, 0003h               ;Установка видеорежима 80/25
+    mov ax, 0003h               ;Г“Г±ГІГ Г­Г®ГўГЄГ  ГўГЁГ¤ГҐГ®Г°ГҐГ¦ГЁГ¬Г  80/25
     int 10h
     pop ax
 endm   
 
 ;/-------------------------------------------------------------------/
-Waiting macro                   ;ОЖИДАНИЕ ДЛЯ СИНХРОНИЗАЦИИ
+Waiting macro                   ;ГЋГ†Г€Г„ГЂГЌГ€Г… Г„Г‹Гџ Г‘Г€ГЌГ•ГђГЋГЌГ€Г‡ГЂГ–Г€Г€
     push ax 
     push cx
     push dx 
       
-    mov ah, 86h                 ;Установка  ожидания CX:DX 
+    mov ah, 86h                 ;Г“Г±ГІГ Г­Г®ГўГЄГ   Г®Г¦ГЁГ¤Г Г­ГЁГї CX:DX 
     mov cx, 1 
     mov dx, Game_loop_pause
     int 15h
@@ -453,36 +453,36 @@ Waiting macro                   ;ОЖИДАНИЕ ДЛЯ СИНХРОНИЗАЦИИ
 endm 
 
 ;/--------------------------------------------------------------------/
-Check_key_pressed macro          ;ПРОВЕРКА НАЖАТИЯ КЛАВИШИ
+Check_key_pressed macro          ;ГЏГђГЋГ‚Г…ГђГЉГЂ ГЌГЂГ†ГЂГ’Г€Гџ ГЉГ‹ГЂГ‚Г€ГГ€
     push ax                      
-    mov ah, 01h                  ;Проверят буфер клавиатуры 
+    mov ah, 01h                  ;ГЏГ°Г®ГўГҐГ°ГїГІ ГЎГіГґГҐГ° ГЄГ«Г ГўГЁГ ГІГіГ°Г» 
     int 16h       
     pop ax
 endm       
 
 ;/---------------------------------------------------------------------/      
-Press_key macro                  ;НАЖАТИЕ КЛАВИШИ
+Press_key macro                  ;ГЌГЂГ†ГЂГ’Г€Г… ГЉГ‹ГЂГ‚Г€ГГ€
     mov ah, 00h
-    int 16h                      ; al - ACSCII код и ah - сканкод клавиши
+    int 16h                      ; al - ACSCII ГЄГ®Г¤ ГЁ ah - Г±ГЄГ Г­ГЄГ®Г¤ ГЄГ«Г ГўГЁГёГЁ
 endm                                                                      
 
 ;/---------------------------------------------------------------------/
-Clear_keyboard_buf macro         ;Очистка буфера клавиатуры
+Clear_keyboard_buf macro         ;ГЋГ·ГЁГ±ГІГЄГ  ГЎГіГґГҐГ°Г  ГЄГ«Г ГўГЁГ ГІГіГ°Г»
     push ax
-    mov ax,0c00h                 ;Вызываем соответствующую функцию
+    mov ax,0c00h                 ;Г‚Г»Г§Г»ГўГ ГҐГ¬ Г±Г®Г®ГІГўГҐГІГ±ГІГўГіГѕГ№ГіГѕ ГґГіГ­ГЄГ¶ГЁГѕ
     int 21h       
     pop ax
 endm 
           
 ;/-----------------------------------------------------------------/
-Rewriting_param macro       ;ПЕРЕЗАПИСЬ ПАРАМЕТРОВ РАНДОМА
+Rewriting_param macro       ;ГЏГ…ГђГ…Г‡ГЂГЏГ€Г‘Гњ ГЏГЂГђГЂГЊГ…Г’ГђГЋГ‚ ГђГЂГЌГ„ГЋГЊГЂ
     push dx
     push cx
     
-    mov ah, 2ch             ;Получение текущего системного времени
+    mov ah, 2ch             ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГІГҐГЄГіГ№ГҐГЈГ® Г±ГЁГ±ГІГҐГ¬Г­Г®ГЈГ® ГўГ°ГҐГ¬ГҐГ­ГЁ
     int 21h
-    mov Random_low, dh      ;Запись секунд
-    mov Random_high, dl     ;запись одной сотой секунды
+    mov Random_low, dh      ;Г‡Г ГЇГЁГ±Гј Г±ГҐГЄГіГ­Г¤
+    mov Random_high, dl     ;Г§Г ГЇГЁГ±Гј Г®Г¤Г­Г®Г© Г±Г®ГІГ®Г© Г±ГҐГЄГіГ­Г¤Г»
     
     pop cx
     pop dx
@@ -490,21 +490,21 @@ endm
 
 ;/--------------------------------------------------------------/
 Calculate_random_parameters macro number shift1 multiplier summand shift2
-    push ax             ;ПЕРЕСЧЕТ ПАРАМЕТРОВ ДЛЯ РАНДОМА
+    push ax             ;ГЏГ…ГђГ…Г‘Г—Г…Г’ ГЏГЂГђГЂГЊГ…Г’ГђГЋГ‚ Г„Г‹Гџ ГђГЂГЌГ„ГЋГЊГЂ
     
-    mov al, number      ;Передача значения для его обновления
-    ror al, shift1      ;shift1(number) Вращение битов(сдвиш вправо)
-    mov ah, multiplier  ;Множитель
-    mul ah              ;Перемножение младшей и старшей части
+    mov al, number      ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г§Г­Г Г·ГҐГ­ГЁГї Г¤Г«Гї ГҐГЈГ® Г®ГЎГ­Г®ГўГ«ГҐГ­ГЁГї
+    ror al, shift1      ;shift1(number) Г‚Г°Г Г№ГҐГ­ГЁГҐ ГЎГЁГІГ®Гў(Г±Г¤ГўГЁГё ГўГЇГ°Г ГўГ®)
+    mov ah, multiplier  ;ГЊГ­Г®Г¦ГЁГІГҐГ«Гј
+    mul ah              ;ГЏГҐГ°ГҐГ¬Г­Г®Г¦ГҐГ­ГЁГҐ Г¬Г«Г Г¤ГёГҐГ© ГЁ Г±ГІГ Г°ГёГҐГ© Г·Г Г±ГІГЁ
     add al, summand     ;shift1(number) * multiplier + summand
-    ror al, shift2      ;Cдвиг новой полученной части
-    mov number, al      ;считывание младшей части
+    ror al, shift2      ;CГ¤ГўГЁГЈ Г­Г®ГўГ®Г© ГЇГ®Г«ГіГ·ГҐГ­Г­Г®Г© Г·Г Г±ГІГЁ
+    mov number, al      ;Г±Г·ГЁГІГ»ГўГ Г­ГЁГҐ Г¬Г«Г Г¤ГёГҐГ© Г·Г Г±ГІГЁ
     
     pop ax      
 endm
 
 ;/-----------------------------------------------------------------/
-Update_data_for_random macro    ;ОБНОВЛЕНИЕ ПАРАМЕТРОВ
+Update_data_for_random macro    ;ГЋГЃГЌГЋГ‚Г‹Г…ГЌГ€Г… ГЏГЂГђГЂГЊГ…Г’ГђГЋГ‚
     Calculate_random_parameters Random        2   23  11  5
     Calculate_random_parameters Random_low    1   7   4   3 
     Calculate_random_parameters Random_high   7   5   8   4    
@@ -512,55 +512,55 @@ Update_data_for_random macro    ;ОБНОВЛЕНИЕ ПАРАМЕТРОВ
 endm 
 
 ;/--------------------------------------------------------------------/
-Get_random_number_macro macro Max_var   ; ПОЛУЧЕНИЕ РАНДОМНОГО ЗНАЧЕНИЯ ОТНОСИТЕЛЬНО ЗАДАННОЙ ПЕРЕМЕННОЙ
+Get_random_number_macro macro Max_var   ; ГЏГЋГ‹Г“Г—Г…ГЌГ€Г… ГђГЂГЌГ„ГЋГЊГЌГЋГѓГЋ Г‡ГЌГЂГ—Г…ГЌГ€Гџ ГЋГ’ГЌГЋГ‘Г€Г’Г…Г‹ГњГЌГЋ Г‡ГЂГ„ГЂГЌГЌГЋГ‰ ГЏГ…ГђГ…ГЊГ…ГЌГЌГЋГ‰
     push bx
     push dx
     
     Update_data_for_random
     xor ax, ax   
     xor bx, bx
-    mov al, Random       ;Получение значения для рандома
-    mov bl, Max_var      ;Получение максимально допустимой границы
-    cwd                  ;Преобразование слова в двойное слово
-    div bx               ;Деление а максимальное допустимое значение
-    mov ax, dx           ;Записываем получившийся остаток в ax
+    mov al, Random       ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г§Г­Г Г·ГҐГ­ГЁГї Г¤Г«Гї Г°Г Г­Г¤Г®Г¬Г 
+    mov bl, Max_var      ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¬Г ГЄГ±ГЁГ¬Г Г«ГјГ­Г® Г¤Г®ГЇГіГ±ГІГЁГ¬Г®Г© ГЈГ°Г Г­ГЁГ¶Г»
+    cwd                  ;ГЏГ°ГҐГ®ГЎГ°Г Г§Г®ГўГ Г­ГЁГҐ Г±Г«Г®ГўГ  Гў Г¤ГўГ®Г©Г­Г®ГҐ Г±Г«Г®ГўГ®
+    div bx               ;Г„ГҐГ«ГҐГ­ГЁГҐ Г  Г¬Г ГЄГ±ГЁГ¬Г Г«ГјГ­Г®ГҐ Г¤Г®ГЇГіГ±ГІГЁГ¬Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ
+    mov ax, dx           ;Г‡Г ГЇГЁГ±Г»ГўГ ГҐГ¬ ГЇГ®Г«ГіГ·ГЁГўГёГЁГ©Г±Гї Г®Г±ГІГ ГІГ®ГЄ Гў ax
     
     pop dx 
     pop bx  
 endm                                                                    
 
 ;/----------------------------------------------------------------------/
-Write_macro macro str           ;МАКРОС ВЫВОДА СТРОКИ
+Write_macro macro str           ;ГЊГЂГЉГђГЋГ‘ Г‚Г›Г‚ГЋГ„ГЂ Г‘Г’ГђГЋГЉГ€
        lea dx, str
        mov ah,09h
        int 21h
 endm
 ;/----------------------------------------------------------------------/
-Calculate_element_offset macro Size_X ;РАСЧИТАТЬ СМЕЩЕНИЕ ОБЪЕКТА ОТНОСИТЕЛЬНО ПОЛЯ
+Calculate_element_offset macro Size_X ;ГђГЂГ‘Г—Г€Г’ГЂГ’Гњ Г‘ГЊГ…Г™Г…ГЌГ€Г… ГЋГЃГљГ…ГЉГ’ГЂ ГЋГ’ГЌГЋГ‘Г€Г’Г…Г‹ГњГЌГЋ ГЏГЋГ‹Гџ
     xor bx, bx
-    mov bl, ah                        ;Передача позиции по Х
+    mov bl, ah                        ;ГЏГҐГ°ГҐГ¤Г Г·Г  ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ® Г•
     mov ah, 0h
     mov dx, Size_X
-    mul dx                            ;Перемножение регистов положения элемента по оси Х на al(положение по Y)
-    add ax, bx                        ;Сложение смещения в матрице поля с положение на Х
+    mul dx                            ;ГЏГҐГ°ГҐГ¬Г­Г®Г¦ГҐГ­ГЁГҐ Г°ГҐГЈГЁГ±ГІГ®Гў ГЇГ®Г«Г®Г¦ГҐГ­ГЁГї ГЅГ«ГҐГ¬ГҐГ­ГІГ  ГЇГ® Г®Г±ГЁ Г• Г­Г  al(ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ ГЇГ® Y)
+    add ax, bx                        ;Г‘Г«Г®Г¦ГҐГ­ГЁГҐ Г±Г¬ГҐГ№ГҐГ­ГЁГї Гў Г¬Г ГІГ°ГЁГ¶ГҐ ГЇГ®Г«Гї Г± ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ Г­Г  Г•
     mov dx, 2 * 2        
-    mul dx                            ;Перемножение положения в матрице(текущее смещение запишется в ax)
+    mul dx                            ;ГЏГҐГ°ГҐГ¬Г­Г®Г¦ГҐГ­ГЁГҐ ГЇГ®Г«Г®Г¦ГҐГ­ГЁГї Гў Г¬Г ГІГ°ГЁГ¶ГҐ(ГІГҐГЄГіГ№ГҐГҐ Г±Г¬ГҐГ№ГҐГ­ГЁГҐ Г§Г ГЇГЁГёГҐГІГ±Гї Гў ax)
 endm 
 
 ;/----------------------------------------------------------------------/
-Draw_element macro Element       ;ОТРИСОВКА ЭЛЕМЕНТА
-    push si                      ;Положение элемента: в ah - положение по Х, в al - положение по Y 
+Draw_element macro Element       ;ГЋГ’ГђГ€Г‘ГЋГ‚ГЉГЂ ГќГ‹Г…ГЊГ…ГЌГ’ГЂ
+    push si                      ;ГЏГ®Г«Г®Г¦ГҐГ­ГЁГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ : Гў ah - ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ ГЇГ® Г•, Гў al - ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ ГЇГ® Y 
     push di
     push cx
     push bx
     push dx
     
     Calculate_element_offset Max_window_size_X
-    mov si, offset Element       ;Получение обрабатываемого элемента
+    mov si, offset Element       ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г®ГЎГ°Г ГЎГ ГІГ»ГўГ ГҐГ¬Г®ГЈГ® ГЅГ«ГҐГ¬ГҐГ­ГІГ 
     mov di, Offset_position_on_field   
-    add di, ax                   ;Получение позиции для перерисовки
+    add di, ax                   ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ Г¤Г«Гї ГЇГҐГ°ГҐГ°ГЁГ±Г®ГўГЄГЁ
     mov cx, 2                
-    rep movsw                    ;Передача слов(2 байта) из DS:SI в ES:DI 
+    rep movsw                    ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г±Г«Г®Гў(2 ГЎГ Г©ГІГ ) ГЁГ§ DS:SI Гў ES:DI 
     
     pop dx
     pop bx
@@ -570,7 +570,7 @@ Draw_element macro Element       ;ОТРИСОВКА ЭЛЕМЕНТА
 endm                                                                        
 
 ;/-------------------------------------------------------------------------/
-Get_element macro                ;ПОЛУЧЕНИЕ ЕЛЕМЕНТА
+Get_element macro                ;ГЏГЋГ‹Г“Г—Г…ГЌГ€Г… Г…Г‹Г…ГЊГ…ГЌГ’ГЂ
     push si
     push bx
     push dx
@@ -579,9 +579,9 @@ Get_element macro                ;ПОЛУЧЕНИЕ ЕЛЕМЕНТА
     Calculate_element_offset Field_length
     mov bx, 2
     div bx     
-    mov si, offset Screen_matrix;Передача поля
-    add si, ax                  ;Переход к адресу оъекта
-    mov ax, [si]                ;Получение элемента по смещению
+    mov si, offset Screen_matrix;ГЏГҐГ°ГҐГ¤Г Г·Г  ГЇГ®Г«Гї
+    add si, ax                  ;ГЏГҐГ°ГҐГµГ®Г¤ ГЄ Г Г¤Г°ГҐГ±Гі Г®ГєГҐГЄГІГ 
+    mov ax, [si]                ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ  ГЇГ® Г±Г¬ГҐГ№ГҐГ­ГЁГѕ
     
     pop dx
     pop bx
@@ -589,8 +589,8 @@ Get_element macro                ;ПОЛУЧЕНИЕ ЕЛЕМЕНТА
 endm
 
 ;/--------------------------------------------------------------------------/
-Check_direction_object proc      ;ПРОВЕРКА ОБЪЕКТА ПО ХОДУ ДВИЖЕНИЯ ПЕРСОНАЖА
-    cmp bl, 0                    ;Получение следующего направления 
+Check_direction_object proc      ;ГЏГђГЋГ‚Г…ГђГЉГЂ ГЋГЃГљГ…ГЉГ’ГЂ ГЏГЋ Г•ГЋГ„Г“ Г„Г‚Г€Г†Г…ГЌГ€Гџ ГЏГ…ГђГ‘ГЋГЌГЂГ†ГЂ
+    cmp bl, 0                    ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г±Г«ГҐГ¤ГіГѕГ№ГҐГЈГ® Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї 
     je Check_object_in_up
     cmp bl, 1
     je Check_object_in_down
@@ -599,49 +599,49 @@ Check_direction_object proc      ;ПРОВЕРКА ОБЪЕКТА ПО ХОДУ ДВИЖЕНИЯ ПЕРСОНАЖА
     cmp bl, 3
     je Check_object_in_right             
     
-Check_object_in_up:              ;Декрементирование позиции по Y(вверх)
+Check_object_in_up:              ;Г„ГҐГЄГ°ГҐГ¬ГҐГ­ГІГЁГ°Г®ГўГ Г­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ® Y(ГўГўГҐГ°Гµ)
         dec al
         jmp Check_got_object
         
-Check_object_in_down:            ;Инкрементирование позиции по Y(вниз)      
+Check_object_in_down:            ;Г€Г­ГЄГ°ГҐГ¬ГҐГ­ГІГЁГ°Г®ГўГ Г­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ® Y(ГўГ­ГЁГ§)      
         inc al
         jmp Check_got_object
         
-Check_object_in_left:            ;Декрементирование позиции по Х(влево)       
+Check_object_in_left:            ;Г„ГҐГЄГ°ГҐГ¬ГҐГ­ГІГЁГ°Г®ГўГ Г­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ® Г•(ГўГ«ГҐГўГ®)       
         dec ah
         jmp Check_got_object
 
-Check_object_in_right:           ;Инкрементирование позиции по Х(вправо)       
+Check_object_in_right:           ;Г€Г­ГЄГ°ГҐГ¬ГҐГ­ГІГЁГ°Г®ГўГ Г­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ® Г•(ГўГЇГ°Г ГўГ®)       
         inc ah
         jmp Check_got_object
         
 Check_got_object: 
-        Get_element              ;Получение объекта по полученной позиции
+        Get_element              ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г®ГЎГєГҐГЄГІГ  ГЇГ® ГЇГ®Г«ГіГ·ГҐГ­Г­Г®Г© ГЇГ®Г§ГЁГ¶ГЁГЁ
         ret
 Check_direction_object endp                                               
 
 ;/-----------------------------------------------------------------------/
-Meeting_pacman_with_ghosts_checking proc ;ПРОВЕРКА ВСТРЕЧИ ПАКМАНА С ПРИЗРАКОМ
+Meeting_pacman_with_ghosts_checking proc ;ГЏГђГЋГ‚Г…ГђГЉГЂ Г‚Г‘Г’ГђГ…Г—Г€ ГЏГЂГЉГЊГЂГЌГЂ Г‘ ГЏГђГ€Г‡ГђГЂГЉГЋГЊ
     push si
     push cx
     push ax
     mov cx, Max_count_of_ghosts
     mov si, 0
     
-Meeting_pacman_with_ghosts_checking_loop: ;Получение позиций призраков
+Meeting_pacman_with_ghosts_checking_loop: ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГ© ГЇГ°ГЁГ§Г°Г ГЄГ®Гў
     mov ah, Ghosts_position_X[si] 
     mov al, Ghosts_position_Y[si]
         
-    cmp ah, Pacman_position_X             ;Проверка координат по Х
+    cmp ah, Pacman_position_X             ;ГЏГ°Г®ГўГҐГ°ГЄГ  ГЄГ®Г®Г°Г¤ГЁГ­Г ГІ ГЇГ® Г•
     je Check_meeting_pac_gh_on_Y
     jmp Check_next_meeting_pacman_with_ghost 
     
-Check_meeting_pac_gh_on_Y:                ;Проверка координат по Y
+Check_meeting_pac_gh_on_Y:                ;ГЏГ°Г®ГўГҐГ°ГЄГ  ГЄГ®Г®Г°Г¤ГЁГ­Г ГІ ГЇГ® Y
     cmp al, Pacman_position_Y
     je Decrement_health
     jmp Check_next_meeting_pacman_with_ghost
             
-Check_next_meeting_pacman_with_ghost:     ;Переход к следующему призраку
+Check_next_meeting_pacman_with_ghost:     ;ГЏГҐГ°ГҐГµГ®Г¤ ГЄ Г±Г«ГҐГ¤ГіГѕГ№ГҐГ¬Гі ГЇГ°ГЁГ§Г°Г ГЄГі
     inc si
 loop Meeting_pacman_with_ghosts_checking_loop               
     pop ax
@@ -649,7 +649,7 @@ loop Meeting_pacman_with_ghosts_checking_loop
     pop si
     ret 
 
-Decrement_health:                         ;Уменьшение жизни
+Decrement_health:                         ;Г“Г¬ГҐГ­ГјГёГҐГ­ГЁГҐ Г¦ГЁГ§Г­ГЁ
     dec Count_of_health
     cmp Count_of_health,0      
     jne Return_to_start
@@ -664,19 +664,19 @@ Decrement_health:                         ;Уменьшение жизни
 Meeting_pacman_with_ghosts_checking endp  
 
 ;/----------------------------------------------------------------------/
-Real_good_game proc                     ;ОКОНЧАНИЕ ИГРЫ ВЫИГРЫШЕМ
-    call Draw_win_string                ;Отрисовка сообщения счета
+Real_good_game proc                     ;ГЋГЉГЋГЌГ—ГЂГЌГ€Г… Г€ГѓГђГ› Г‚Г›Г€ГѓГђГ›ГГ…ГЊ
+    call Draw_win_string                ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  Г±Г®Г®ГЎГ№ГҐГ­ГЁГї Г±Г·ГҐГІГ 
     call Draw_reset_quit_str
 Waiting_pressed_F_:    
-    Press_key                           ;Нажатие клавиши  
-    Clear_keyboard_buf                  ;Очистка буфера клавиатуры  
+    Press_key                           ;ГЌГ Г¦Г ГІГЁГҐ ГЄГ«Г ГўГЁГёГЁ  
+    Clear_keyboard_buf                  ;ГЋГ·ГЁГ±ГІГЄГ  ГЎГіГґГҐГ°Г  ГЄГ«Г ГўГЁГ ГІГіГ°Г»  
     
-    cmp al, 'r'                         ;Перезапуск игры
+    cmp al, 'r'                         ;ГЏГҐГ°ГҐГ§Г ГЇГіГ±ГЄ ГЁГЈГ°Г»
     je call Reset_game
     cmp al, 'R'
     je call Reset_game
     
-    cmp ah, 0Fh                         ;Выход из игры
+    cmp ah, 0Fh                         ;Г‚Г»ГµГ®Г¤ ГЁГ§ ГЁГЈГ°Г»
     je End_of_game
     
     jmp Waiting_pressed_F_  
@@ -684,20 +684,20 @@ Waiting_pressed_F_:
 Real_good_game endp
 
 ;/----------------------------------------------------------------------/
-Good_game_well_played proc              ;ОКОНЧАНИЕ ИГРЫ ПРОИГРЫШЕМ
-    call Draw_clean_pause_string        ;Стирание сообщений меню
-    call Draw_lose_string               ;Отрисовка сообщения счета
+Good_game_well_played proc              ;ГЋГЉГЋГЌГ—ГЂГЌГ€Г… Г€ГѓГђГ› ГЏГђГЋГ€ГѓГђГ›ГГ…ГЊ
+    call Draw_clean_pause_string        ;Г‘ГІГЁГ°Г Г­ГЁГҐ Г±Г®Г®ГЎГ№ГҐГ­ГЁГ© Г¬ГҐГ­Гѕ
+    call Draw_lose_string               ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  Г±Г®Г®ГЎГ№ГҐГ­ГЁГї Г±Г·ГҐГІГ 
     call Draw_reset_quit_str
 Waiting_pressed_F:    
-    Press_key                           ;Нажатие клавиши  
-    Clear_keyboard_buf                  ;Очистка буфера клавиатуры  
+    Press_key                           ;ГЌГ Г¦Г ГІГЁГҐ ГЄГ«Г ГўГЁГёГЁ  
+    Clear_keyboard_buf                  ;ГЋГ·ГЁГ±ГІГЄГ  ГЎГіГґГҐГ°Г  ГЄГ«Г ГўГЁГ ГІГіГ°Г»  
     
-    cmp al, 'r'                         ;Перезапуск игры
+    cmp al, 'r'                         ;ГЏГҐГ°ГҐГ§Г ГЇГіГ±ГЄ ГЁГЈГ°Г»
     je call Reset_game
     cmp al, 'R'
     je call Reset_game
     
-    cmp ah, 0Fh                         ;Выход из игры
+    cmp ah, 0Fh                         ;Г‚Г»ГµГ®Г¤ ГЁГ§ ГЁГЈГ°Г»
     je End_of_game
     
     jmp Waiting_pressed_F  
@@ -705,32 +705,32 @@ Waiting_pressed_F:
 Good_game_well_played endp
 
 ;/---------------------------------------------------------------------/
-Meeting_pacman_with_apple_checking proc  ;ПРОВЕРКА ВСТРЕЧИ ПАКМАНА С ЯБЛОКОМ
+Meeting_pacman_with_apple_checking proc  ;ГЏГђГЋГ‚Г…ГђГЉГЂ Г‚Г‘Г’ГђГ…Г—Г€ ГЏГЂГЉГЊГЂГЌГЂ Г‘ ГџГЃГ‹ГЋГЉГЋГЊ
     push ax                     
     
-Meeting_pacman_with_apple_on_X:          ;Проверка встречи по оси Х
+Meeting_pacman_with_apple_on_X:          ;ГЏГ°Г®ГўГҐГ°ГЄГ  ГўГ±ГІГ°ГҐГ·ГЁ ГЇГ® Г®Г±ГЁ Г•
     mov ah, Apple_position_X
     mov al, Pacman_position_X
     cmp ah, al                           
-    je Meeting_pacman_with_apple_on_Y    ;Если координаты по Х совпадают
+    je Meeting_pacman_with_apple_on_Y    ;Г…Г±Г«ГЁ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ» ГЇГ® Г• Г±Г®ГўГЇГ Г¤Г ГѕГІ
     jmp End_meeting_pacman_with_apple  
     
-Meeting_pacman_with_apple_on_Y:          ;Проверка встречи по оси Y     
+Meeting_pacman_with_apple_on_Y:          ;ГЏГ°Г®ГўГҐГ°ГЄГ  ГўГ±ГІГ°ГҐГ·ГЁ ГЇГ® Г®Г±ГЁ Y     
     mov ah, Apple_position_Y
     mov al, Pacman_position_Y
     cmp ah, al
-    je Rewriting_score                   ;Если координаты совпадают, то перезапись счета
+    je Rewriting_score                   ;Г…Г±Г«ГЁ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ» Г±Г®ГўГЇГ Г¤Г ГѕГІ, ГІГ® ГЇГҐГ°ГҐГ§Г ГЇГЁГ±Гј Г±Г·ГҐГІГ 
     jmp End_meeting_pacman_with_apple
         
-Rewriting_score:                         ;Инкрементирование счета
+Rewriting_score:                         ;Г€Г­ГЄГ°ГҐГ¬ГҐГ­ГІГЁГ°Г®ГўГ Г­ГЁГҐ Г±Г·ГҐГІГ 
     inc Count_of_apple  
     call Apple_appearance 
     
-    push ax                              ;Проверка на победу
+    push ax                              ;ГЏГ°Г®ГўГҐГ°ГЄГ  Г­Г  ГЇГ®ГЎГҐГ¤Гі
     mov al, Count_of_apple 
     mov ah, Max_count_of_apples 
     cmp al, ah 
-    je call Real_good_game               ;В случае победы 
+    je call Real_good_game               ;Г‚ Г±Г«ГіГ·Г ГҐ ГЇГ®ГЎГҐГ¤Г» 
     pop ax   
                 
     jmp End_meeting_pacman_with_apple    
@@ -741,24 +741,24 @@ End_meeting_pacman_with_apple:
 Meeting_pacman_with_apple_checking endp
  
 ;/------------------------------------------------------------------/ 
-Meeting_ghosts_with_apple_checking proc  ;ПРОВЕРКА ВСТРЕЧИ ПРИЗРАКА С ЯБЛОКОМ
+Meeting_ghosts_with_apple_checking proc  ;ГЏГђГЋГ‚Г…ГђГЉГЂ Г‚Г‘Г’ГђГ…Г—Г€ ГЏГђГ€Г‡ГђГЂГЉГЂ Г‘ ГџГЃГ‹ГЋГЉГЋГЊ
     push ax                     
     
-Meeting_ghost_with_apple_on_X:           ;Сравнение позиций элементов по оси Х
+Meeting_ghost_with_apple_on_X:           ;Г‘Г°Г ГўГ­ГҐГ­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГ© ГЅГ«ГҐГ¬ГҐГ­ГІГ®Гў ГЇГ® Г®Г±ГЁ Г•
     mov ah, Apple_position_X
     mov al, Ghosts_position_X[si]
     cmp ah, al
-    je Meeting_ghost_with_apple_on_Y     ;Если совпала, то проверка другой оси
+    je Meeting_ghost_with_apple_on_Y     ;Г…Г±Г«ГЁ Г±Г®ГўГЇГ Г«Г , ГІГ® ГЇГ°Г®ГўГҐГ°ГЄГ  Г¤Г°ГіГЈГ®Г© Г®Г±ГЁ
     jmp End_meeting_ghosts_with_apple  
         
-Meeting_ghost_with_apple_on_Y:           ;Проверка оси Y
+Meeting_ghost_with_apple_on_Y:           ;ГЏГ°Г®ГўГҐГ°ГЄГ  Г®Г±ГЁ Y
     mov ah, Apple_position_Y
     mov al, Ghosts_position_Y[si]
     cmp ah, al
-    je Rebraw_apple                      ;Если совпала, то перерисовывание яблока
+    je Rebraw_apple                      ;Г…Г±Г«ГЁ Г±Г®ГўГЇГ Г«Г , ГІГ® ГЇГҐГ°ГҐГ°ГЁГ±Г®ГўГ»ГўГ Г­ГЁГҐ ГїГЎГ«Г®ГЄГ 
     jmp End_meeting_ghosts_with_apple
         
-Rebraw_apple:                            ;Перерисовывание яблока
+Rebraw_apple:                            ;ГЏГҐГ°ГҐГ°ГЁГ±Г®ГўГ»ГўГ Г­ГЁГҐ ГїГЎГ«Г®ГЄГ 
     call Drawing_apple
         
 End_meeting_ghosts_with_apple:
@@ -767,50 +767,50 @@ End_meeting_ghosts_with_apple:
 Meeting_ghosts_with_apple_checking endp  
 
 ;/----------------------------------------------------------------------------/
-Pacman_appearance proc                  ;ПОЯВЛЕНИЕ ПАКМАНА
-    mov Pacman_position_X, 1            ;Установка позиции пакмана
+Pacman_appearance proc                  ;ГЏГЋГџГ‚Г‹Г…ГЌГ€Г… ГЏГЂГЉГЊГЂГЌГЂ
+    mov Pacman_position_X, 1            ;Г“Г±ГІГ Г­Г®ГўГЄГ  ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ ГЄГ¬Г Г­Г 
     mov Pacman_position_Y, 1
-    mov Pacman_current_direction, 2     ;Установка текущего направления пакмана(налево)
+    mov Pacman_current_direction, 2     ;Г“Г±ГІГ Г­Г®ГўГЄГ  ГІГҐГЄГіГ№ГҐГЈГ® Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї ГЇГ ГЄГ¬Г Г­Г (Г­Г Г«ГҐГўГ®)
     mov Pacman_next_direction, 2
-    call Drawing_pacman                 ;Отрисовка пакмана
+    call Drawing_pacman                 ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  ГЇГ ГЄГ¬Г Г­Г 
     ret
 Pacman_appearance endp
 
 ;/-----------------------------------------------------------------------------/
-Keypress_check proc                     ;ПРОВЕРКА НАЖАТИЯ КЛАВИШИ
+Keypress_check proc                     ;ГЏГђГЋГ‚Г…ГђГЉГЂ ГЌГЂГ†ГЂГ’Г€Гџ ГЉГ‹ГЂГ‚Г€ГГ€
     Check_key_pressed
-    jnz If_pressed                      ;Если нажатие клавиши доступно
+    jnz If_pressed                      ;Г…Г±Г«ГЁ Г­Г Г¦Г ГІГЁГҐ ГЄГ«Г ГўГЁГёГЁ Г¤Г®Г±ГІГіГЇГ­Г®
     
     mov Flag_moving_pacman, 0
     ret
         
-If_pressed:                             ;Если нажата     
+If_pressed:                             ;Г…Г±Г«ГЁ Г­Г Г¦Г ГІГ      
     mov Flag_moving_pacman, 1
-    Press_key                           ;Нажатие клавиши 
-    Clear_keyboard_buf                  ;Очистка буфера клавиатуры
+    Press_key                           ;ГЌГ Г¦Г ГІГЁГҐ ГЄГ«Г ГўГЁГёГЁ 
+    Clear_keyboard_buf                  ;ГЋГ·ГЁГ±ГІГЄГ  ГЎГіГґГҐГ°Г  ГЄГ«Г ГўГЁГ ГІГіГ°Г»
     
-    cmp al, 'w'                         ;Если нажата вверх
+    cmp al, 'w'                         ;Г…Г±Г«ГЁ Г­Г Г¦Г ГІГ  ГўГўГҐГ°Гµ
     je Pacman_direction_up 
     cmp al, 'W'
     je Pacman_direction_up
     cmp ah, 48h
     je Pacman_direction_up
     
-    cmp al, 's'                         ;Если нажата вниз
+    cmp al, 's'                         ;Г…Г±Г«ГЁ Г­Г Г¦Г ГІГ  ГўГ­ГЁГ§
     je Pacman_direction_down  
     cmp al, 'S'
     je Pacman_direction_down
     cmp ah, 50h
     je Pacman_direction_down    
     
-    cmp al, 'a'                         ;Если нажата влево
+    cmp al, 'a'                         ;Г…Г±Г«ГЁ Г­Г Г¦Г ГІГ  ГўГ«ГҐГўГ®
     je Pacman_direction_left 
     cmp al, 'A'
     je Pacman_direction_left
     cmp ah, 4bh
     je Pacman_direction_left
         
-    cmp al, 'd'                         ;Если нажата вправо
+    cmp al, 'd'                         ;Г…Г±Г«ГЁ Г­Г Г¦Г ГІГ  ГўГЇГ°Г ГўГ®
     je Pacman_direction_right 
     cmp al, 'D'
     je Pacman_direction_right    
@@ -823,39 +823,39 @@ If_pressed:                             ;Если нажата
     mov Pacman_next_direction, 5             ;;;;;;;;;
     ret
         
-Pacman_direction_up:                    ;Установка направления движения вверх 
+Pacman_direction_up:                    ;Г“Г±ГІГ Г­Г®ГўГЄГ  Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї Г¤ГўГЁГ¦ГҐГ­ГЁГї ГўГўГҐГ°Гµ 
     mov Pacman_next_direction, 0
     ret   
     
 Pacman_direction_down:
-    mov Pacman_next_direction, 1        ;Установка движения вниз
+    mov Pacman_next_direction, 1        ;Г“Г±ГІГ Г­Г®ГўГЄГ  Г¤ГўГЁГ¦ГҐГ­ГЁГї ГўГ­ГЁГ§
     ret    
     
-Pacman_direction_left:                  ;Установка движения влево
+Pacman_direction_left:                  ;Г“Г±ГІГ Г­Г®ГўГЄГ  Г¤ГўГЁГ¦ГҐГ­ГЁГї ГўГ«ГҐГўГ®
     mov Pacman_next_direction, 2
     ret  
     
-Pacman_direction_right:                 ;Установка движения вправо
+Pacman_direction_right:                 ;Г“Г±ГІГ Г­Г®ГўГЄГ  Г¤ГўГЁГ¦ГҐГ­ГЁГї ГўГЇГ°Г ГўГ®
     mov Pacman_next_direction, 3
     ret 
     
 Keypress_check endp                                                    
 
 ;/----------------------------------------------------------------/
-Stop_game proc                          ;ПАУЗА ИГРЫ   
+Stop_game proc                          ;ГЏГЂГ“Г‡ГЂ Г€ГѓГђГ›   
     push ax      
-    call Draw_pause_string              ;Появление сообщений о меню   
+    call Draw_pause_string              ;ГЏГ®ГїГўГ«ГҐГ­ГЁГҐ Г±Г®Г®ГЎГ№ГҐГ­ГЁГ© Г® Г¬ГҐГ­Гѕ   
     call Draw_reset_quit_str
 If_pause_pressed:    
-    Press_key                           ;Нажатие клавиши  
-    Clear_keyboard_buf                  ;Очистка буфера клавиатуры  
-    cmp ah, 1Ch                         ;Продолжить игру
+    Press_key                           ;ГЌГ Г¦Г ГІГЁГҐ ГЄГ«Г ГўГЁГёГЁ  
+    Clear_keyboard_buf                  ;ГЋГ·ГЁГ±ГІГЄГ  ГЎГіГґГҐГ°Г  ГЄГ«Г ГўГЁГ ГІГіГ°Г»  
+    cmp ah, 1Ch                         ;ГЏГ°Г®Г¤Г®Г«Г¦ГЁГІГј ГЁГЈГ°Гі
     je End_pause 
     
-    cmp ah, 0Fh                         ;Конец игры
+    cmp ah, 0Fh                         ;ГЉГ®Г­ГҐГ¶ ГЁГЈГ°Г»
     je End_of_game 
     
-    cmp al, 'r'                         ;Перезапуск игры
+    cmp al, 'r'                         ;ГЏГҐГ°ГҐГ§Г ГЇГіГ±ГЄ ГЁГЈГ°Г»
     je call Reset_game
     cmp al, 'R'
     je call Reset_game
@@ -863,29 +863,29 @@ If_pause_pressed:
     jmp If_pause_pressed 
     
 End_pause:
-    call Draw_clean_pause_string        ;Стирание сообщений меню
+    call Draw_clean_pause_string        ;Г‘ГІГЁГ°Г Г­ГЁГҐ Г±Г®Г®ГЎГ№ГҐГ­ГЁГ© Г¬ГҐГ­Гѕ
     pop ax
     ret    
 Stop_game endp   
 
 ;/----------------------------------------------------------------/
-Reset_game proc                         ;ПЕРЕЗАПУСТИТЬ ИГРУ                 
+Reset_game proc                         ;ГЏГ…ГђГ…Г‡ГЂГЏГ“Г‘Г’Г€Г’Гњ Г€ГѓГђГ“                 
     Set_screen 
     jmp start
     ret
 Reset_game endp  
 
 ;/----------------------------------------------------------------/    
-Delete_pacman proc                      ;УДАЛЕНИЕ ПАКМАНА
+Delete_pacman proc                      ;Г“Г„ГЂГ‹Г…ГЌГ€Г… ГЏГЂГЉГЊГЂГЌГЂ
     mov ah, Pacman_position_X 
     mov al, Pacman_position_Y
-    Draw_element Empty_element          ;Рисовка на место пакмана пустого блока
+    Draw_element Empty_element          ;ГђГЁГ±Г®ГўГЄГ  Г­Г  Г¬ГҐГ±ГІГ® ГЇГ ГЄГ¬Г Г­Г  ГЇГіГ±ГІГ®ГЈГ® ГЎГ«Г®ГЄГ 
     ret
 Delete_pacman endp
 
 ;/----------------------------------------------------------------/ 
-Rewriting_pacman_positions proc         ;ПЕРЕЗАПИСЬ ТЕКУЩЕЙ ПОЗИЦИИ ПАКМАНА
-    cmp Pacman_current_direction, 0     ;Получение текущего напрвления пакмана 
+Rewriting_pacman_positions proc         ;ГЏГ…ГђГ…Г‡ГЂГЏГ€Г‘Гњ Г’Г…ГЉГ“Г™Г…Г‰ ГЏГЋГ‡Г€Г–Г€Г€ ГЏГЂГЉГЊГЂГЌГЂ
+    cmp Pacman_current_direction, 0     ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГІГҐГЄГіГ№ГҐГЈГ® Г­Г ГЇГ°ГўГ«ГҐГ­ГЁГї ГЇГ ГЄГ¬Г Г­Г  
     je Rewritting_pacman_on_up
     cmp Pacman_current_direction, 1
     je Rewritting_pacman_on_down
@@ -894,29 +894,29 @@ Rewriting_pacman_positions proc         ;ПЕРЕЗАПИСЬ ТЕКУЩЕЙ ПОЗИЦИИ ПАКМАНА
     cmp Pacman_current_direction, 3
     je Rewritting_pacman_on_right             
     
-Rewritting_pacman_on_up:                ;Перезапись направления на вверх        
+Rewritting_pacman_on_up:                ;ГЏГҐГ°ГҐГ§Г ГЇГЁГ±Гј Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї Г­Г  ГўГўГҐГ°Гµ        
         dec Pacman_position_Y
         ret
   
-Rewritting_pacman_on_down:              ;Перезапись направления на вниз
+Rewritting_pacman_on_down:              ;ГЏГҐГ°ГҐГ§Г ГЇГЁГ±Гј Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї Г­Г  ГўГ­ГЁГ§
         inc Pacman_position_Y
         ret
    
-Rewritting_pacman_on_left:              ;Перезапись направления на влево
+Rewritting_pacman_on_left:              ;ГЏГҐГ°ГҐГ§Г ГЇГЁГ±Гј Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї Г­Г  ГўГ«ГҐГўГ®
         dec Pacman_position_X
         ret
   
-Rewritting_pacman_on_right:             ;Перезапись направления на вправо 
+Rewritting_pacman_on_right:             ;ГЏГҐГ°ГҐГ§Г ГЇГЁГ±Гј Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї Г­Г  ГўГЇГ°Г ГўГ® 
         inc Pacman_position_X
         ret
 Rewriting_pacman_positions endp                                       
 
 ;/----------------------------------------------------------------/
-Drawing_pacman proc                     ;ОТРИСОВКА ПАКМАНА
-    mov ah, Pacman_position_X           ;Получение текущей позиции пакмана на поле
+Drawing_pacman proc                     ;ГЋГ’ГђГ€Г‘ГЋГ‚ГЉГЂ ГЏГЂГЉГЊГЂГЌГЂ
+    mov ah, Pacman_position_X           ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГІГҐГЄГіГ№ГҐГ© ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ ГЄГ¬Г Г­Г  Г­Г  ГЇГ®Г«ГҐ
     mov al, Pacman_position_Y
     
-    cmp Pacman_current_direction, 0     ;Получение направления движения пакмана 
+    cmp Pacman_current_direction, 0     ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї Г¤ГўГЁГ¦ГҐГ­ГЁГї ГЇГ ГЄГ¬Г Г­Г  
     je Drawing_pacman_up   
     
     cmp Pacman_current_direction, 1
@@ -928,19 +928,19 @@ Drawing_pacman proc                     ;ОТРИСОВКА ПАКМАНА
     cmp Pacman_current_direction, 3
     je Drawing_pacman_right    
     
-Drawing_pacman_up:                      ;Если движение вверх                
+Drawing_pacman_up:                      ;Г…Г±Г«ГЁ Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГўГўГҐГ°Гµ                
         Draw_element Pacman_UP
         jmp Drawing_pacman_complete
 
-Drawing_pacman_down:                    ;Если движение вниз
+Drawing_pacman_down:                    ;Г…Г±Г«ГЁ Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГўГ­ГЁГ§
         Draw_element Pacman_DOWN
         jmp Drawing_pacman_complete
     
-Drawing_pacman_left:                    ;Если движение влево
+Drawing_pacman_left:                    ;Г…Г±Г«ГЁ Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГўГ«ГҐГўГ®
         Draw_element Pacman_LEFT
         jmp Drawing_pacman_complete
     
-Drawing_pacman_right:                   ;Если движение вниз
+Drawing_pacman_right:                   ;Г…Г±Г«ГЁ Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГўГ­ГЁГ§
         Draw_element Pacman_RIGHT
         jmp Drawing_pacman_complete
     
@@ -949,44 +949,44 @@ Drawing_pacman_complete:
 Drawing_pacman endp     
 
 ;/------------------------------------------------------------------/ 
-Moving_pacman proc                        ;ДВИЖЕНИЕ ОСНОВНОГО ПЕРСОНАЖА
+Moving_pacman proc                        ;Г„Г‚Г€Г†Г…ГЌГ€Г… ГЋГ‘ГЌГЋГ‚ГЌГЋГѓГЋ ГЏГ…ГђГ‘ГЋГЌГЂГ†ГЂ
     push ax
     push bx
-    call Keypress_check                   ;Проверка нажатия клавиши движения пакмана
+    call Keypress_check                   ;ГЏГ°Г®ГўГҐГ°ГЄГ  Г­Г Г¦Г ГІГЁГї ГЄГ«Г ГўГЁГёГЁ Г¤ГўГЁГ¦ГҐГ­ГЁГї ГЇГ ГЄГ¬Г Г­Г 
     
-    cmp Pacman_next_direction, 5          ;Если не нажата клавиша направления
+    cmp Pacman_next_direction, 5          ;Г…Г±Г«ГЁ Г­ГҐ Г­Г Г¦Г ГІГ  ГЄГ«Г ГўГЁГёГ  Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї
     je Moving_pacman_complete              ;;;;;;;;;;
-    cmp Flag_moving_pacman, 0             ;Если не установлен флаг движения
+    cmp Flag_moving_pacman, 0             ;Г…Г±Г«ГЁ Г­ГҐ ГіГ±ГІГ Г­Г®ГўГ«ГҐГ­ ГґГ«Г ГЈ Г¤ГўГЁГ¦ГҐГ­ГЁГї
     je Moving_pacman_complete              ;;;;;;;;;;    
                 
 Check_pacman_next_direction:
-    mov ah, Pacman_position_X              ;Получение текущей позиции клавиши
+    mov ah, Pacman_position_X              ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГІГҐГЄГіГ№ГҐГ© ГЇГ®Г§ГЁГ¶ГЁГЁ ГЄГ«Г ГўГЁГёГЁ
     mov al, Pacman_position_Y
-    mov bl, Pacman_next_direction          ;Получение следующего направления
-    call Check_direction_object            ;Процедура проверки объекта по направлению движения
+    mov bl, Pacman_next_direction          ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г±Г«ГҐГ¤ГіГѕГ№ГҐГЈГ® Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї
+    call Check_direction_object            ;ГЏГ°Г®Г¶ГҐГ¤ГіГ°Г  ГЇГ°Г®ГўГҐГ°ГЄГЁ Г®ГЎГєГҐГЄГІГ  ГЇГ® Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГѕ Г¤ГўГЁГ¦ГҐГ­ГЁГї
     cmp ax, em
-    je Change_to_new_direction_pacman      ;Если свободная позиция 
+    je Change_to_new_direction_pacman      ;Г…Г±Г«ГЁ Г±ГўГ®ГЎГ®Г¤Г­Г Гї ГЇГ®Г§ГЁГ¶ГЁГї 
        
-Check_current_position_pacman:             ;Получение текущей позиции пакмана
+Check_current_position_pacman:             ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГІГҐГЄГіГ№ГҐГ© ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ ГЄГ¬Г Г­Г 
     mov ah, Pacman_position_X 
     mov al, Pacman_position_Y
     mov bl, Pacman_current_direction        
-    call Check_direction_object            ;Получение объекта по текущей позиции
-    cmp ax, em                             ;Если свободная ячейка
-    je Redraw_pacman                       ;Перерисовывание пакмана на текущую же позицию
+    call Check_direction_object            ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г®ГЎГєГҐГЄГІГ  ГЇГ® ГІГҐГЄГіГ№ГҐГ© ГЇГ®Г§ГЁГ¶ГЁГЁ
+    cmp ax, em                             ;Г…Г±Г«ГЁ Г±ГўГ®ГЎГ®Г¤Г­Г Гї ГїГ·ГҐГ©ГЄГ 
+    je Redraw_pacman                       ;ГЏГҐГ°ГҐГ°ГЁГ±Г®ГўГ»ГўГ Г­ГЁГҐ ГЇГ ГЄГ¬Г Г­Г  Г­Г  ГІГҐГЄГіГ№ГіГѕ Г¦ГҐ ГЇГ®Г§ГЁГ¶ГЁГѕ
     cmp ax, wl
     je Moving_pacman_complete    
     
-Change_to_new_direction_pacman:            ;Перезапись направления движения пакмана 
+Change_to_new_direction_pacman:            ;ГЏГҐГ°ГҐГ§Г ГЇГЁГ±Гј Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї Г¤ГўГЁГ¦ГҐГ­ГЁГї ГЇГ ГЄГ¬Г Г­Г  
     mov ah, Pacman_next_direction     
     mov Pacman_current_direction, ah
                 
 Redraw_pacman:    
-    call Delete_pacman                       ;Удаление пакмана
-    call Rewriting_pacman_positions          ;Перезапись координат пакмана
-    call Meeting_pacman_with_ghosts_checking ;Проверка встречи пакмана и призрака
-    call Meeting_pacman_with_apple_checking  ;Проверка встречи пакмана с яблоком
-    call Drawing_pacman                      ;Отрисовка пакмана
+    call Delete_pacman                       ;Г“Г¤Г Г«ГҐГ­ГЁГҐ ГЇГ ГЄГ¬Г Г­Г 
+    call Rewriting_pacman_positions          ;ГЏГҐГ°ГҐГ§Г ГЇГЁГ±Гј ГЄГ®Г®Г°Г¤ГЁГ­Г ГІ ГЇГ ГЄГ¬Г Г­Г 
+    call Meeting_pacman_with_ghosts_checking ;ГЏГ°Г®ГўГҐГ°ГЄГ  ГўГ±ГІГ°ГҐГ·ГЁ ГЇГ ГЄГ¬Г Г­Г  ГЁ ГЇГ°ГЁГ§Г°Г ГЄГ 
+    call Meeting_pacman_with_apple_checking  ;ГЏГ°Г®ГўГҐГ°ГЄГ  ГўГ±ГІГ°ГҐГ·ГЁ ГЇГ ГЄГ¬Г Г­Г  Г± ГїГЎГ«Г®ГЄГ®Г¬
+    call Drawing_pacman                      ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  ГЇГ ГЄГ¬Г Г­Г 
         
 Moving_pacman_complete:     
     pop bx 
@@ -995,53 +995,53 @@ Moving_pacman_complete:
 Moving_pacman endp
  
 ;/--------------------------------------------------------------------/           
-Ghosts_appearance proc              ;ПОЯВЛЕНИЕ ПРИЗРАКОВ
-    Rewriting_param                 ;Обновление параметров рандома
+Ghosts_appearance proc              ;ГЏГЋГџГ‚Г‹Г…ГЌГ€Г… ГЏГђГ€Г‡ГђГЂГЉГЋГ‚
+    Rewriting_param                 ;ГЋГЎГ­Г®ГўГ«ГҐГ­ГЁГҐ ГЇГ Г°Г Г¬ГҐГІГ°Г®Гў Г°Г Г­Г¤Г®Г¬Г 
     
-    mov cx, Max_count_of_ghosts     ;Передача числа параметров
+    mov cx, Max_count_of_ghosts     ;ГЏГҐГ°ГҐГ¤Г Г·Г  Г·ГЁГ±Г«Г  ГЇГ Г°Г Г¬ГҐГІГ°Г®Гў
     mov si, 0
     
 Appearance_ghost_loop:        
 Create_ghost:
-    ;Get_random_number_macro Field_length_X   ;Получение позиции где появится призрак
-    Get_random_number_macro Field_length   ;Получение позиции где появится призрак
+    ;Get_random_number_macro Field_length_X   ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЈГ¤ГҐ ГЇГ®ГїГўГЁГІГ±Гї ГЇГ°ГЁГ§Г°Г ГЄ
+    Get_random_number_macro Field_length   ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЈГ¤ГҐ ГЇГ®ГїГўГЁГІГ±Гї ГЇГ°ГЁГ§Г°Г ГЄ
     mov Ghosts_position_X[si], al  
-    Get_random_number_macro Field_length   ;Получение позиции где появится призрак    
+    Get_random_number_macro Field_length   ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЈГ¤ГҐ ГЇГ®ГїГўГЁГІГ±Гї ГЇГ°ГЁГ§Г°Г ГЄ    
     ;Get_random_number_macro Field_length_Y
     mov Ghosts_position_Y[si], al   
     
-    Get_random_number_macro 4              ;Получение направления для движения пакмана 
+    Get_random_number_macro 4              ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї Г¤Г«Гї Г¤ГўГЁГ¦ГҐГ­ГЁГї ГЇГ ГЄГ¬Г Г­Г  
     mov Ghosts_current_direction[si], al
-    Get_random_number_macro 4              ;Получение цвета призрака
+    Get_random_number_macro 4              ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¶ГўГҐГІГ  ГЇГ°ГЁГ§Г°Г ГЄГ 
     mov Ghosts_colors[si], al              
     
     mov ah, Ghosts_position_X[si]
     mov al, Ghosts_position_Y[si]
-    Get_element                      ;Получение элемента, находящего по данной позиции(где должен появится призрак)
-    cmp ax, em                       ;Если пустое пространство (можно ставить призрака)
+    Get_element                      ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ , Г­Г ГµГ®Г¤ГїГ№ГҐГЈГ® ГЇГ® Г¤Г Г­Г­Г®Г© ГЇГ®Г§ГЁГ¶ГЁГЁ(ГЈГ¤ГҐ Г¤Г®Г«Г¦ГҐГ­ ГЇГ®ГїГўГЁГІГ±Гї ГЇГ°ГЁГ§Г°Г ГЄ)
+    cmp ax, em                       ;Г…Г±Г«ГЁ ГЇГіГ±ГІГ®ГҐ ГЇГ°Г®Г±ГІГ°Г Г­Г±ГІГўГ® (Г¬Г®Г¦Г­Г® Г±ГІГ ГўГЁГІГј ГЇГ°ГЁГ§Г°Г ГЄГ )
     je Create_next_chost
     jmp Create_ghost
                  
-Create_next_chost:                   ;Создание следующего призрака
+Create_next_chost:                   ;Г‘Г®Г§Г¤Г Г­ГЁГҐ Г±Г«ГҐГ¤ГіГѕГ№ГҐГЈГ® ГЇГ°ГЁГ§Г°Г ГЄГ 
     call Drawing_chost
     inc si
 loop Appearance_ghost_loop    
     
-    mov Ghosts_delay_counter, 0      ;Установка начально задержки 
+    mov Ghosts_delay_counter, 0      ;Г“Г±ГІГ Г­Г®ГўГЄГ  Г­Г Г·Г Г«ГјГ­Г® Г§Г Г¤ГҐГ°Г¦ГЄГЁ 
     ret
 Ghosts_appearance endp                                              
 
 ;/-----------------------------------------------------------------/
-Delete_chost proc                    ;УДАЛЕНИЕ ПРИЗРАКА
+Delete_chost proc                    ;Г“Г„ГЂГ‹Г…ГЌГ€Г… ГЏГђГ€Г‡ГђГЂГЉГЂ
     mov ah, Ghosts_position_X[si] 
     mov al, Ghosts_position_Y[si]
-    Draw_element Empty_element       ;Установка на место призрака пустого блока
+    Draw_element Empty_element       ;Г“Г±ГІГ Г­Г®ГўГЄГ  Г­Г  Г¬ГҐГ±ГІГ® ГЇГ°ГЁГ§Г°Г ГЄГ  ГЇГіГ±ГІГ®ГЈГ® ГЎГ«Г®ГЄГ 
     ret
 Delete_chost endp
 
 ;/-----------------------------------------------------------------/ 
-Rewriting_ghost_position proc        ;ПЕРЕЗАПИСЬ ТЕКУЩЕЙ ПОЗИЦИИ ПРИЗРАКА
-    cmp bl, 0                        ;Получение данных о направлении движения призрака
+Rewriting_ghost_position proc        ;ГЏГ…ГђГ…Г‡ГЂГЏГ€Г‘Гњ Г’Г…ГЉГ“Г™Г…Г‰ ГЏГЋГ‡Г€Г–Г€Г€ ГЏГђГ€Г‡ГђГЂГЉГЂ
+    cmp bl, 0                        ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г Г­Г­Г»Гµ Г® Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГЁ Г¤ГўГЁГ¦ГҐГ­ГЁГї ГЇГ°ГЁГ§Г°Г ГЄГ 
     je Moving_chost_in_up
     cmp bl, 1
     je Moving_chost_in_down
@@ -1050,51 +1050,51 @@ Rewriting_ghost_position proc        ;ПЕРЕЗАПИСЬ ТЕКУЩЕЙ ПОЗИЦИИ ПРИЗРАКА
     cmp bl, 3
     je Moving_chost_in_right             
     
-Moving_chost_in_up:                  ;Декрементирование позиции по Y
+Moving_chost_in_up:                  ;Г„ГҐГЄГ°ГҐГ¬ГҐГ­ГІГЁГ°Г®ГўГ Г­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ® Y
     dec Ghosts_position_Y[si]
     ret
 
-Moving_chost_in_down:                ;Икрементирование позиции по Y
+Moving_chost_in_down:                ;Г€ГЄГ°ГҐГ¬ГҐГ­ГІГЁГ°Г®ГўГ Г­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ® Y
     inc Ghosts_position_Y[si]
     ret
   
-Moving_chost_in_left:                ;Декрементирование позиции по Х 
+Moving_chost_in_left:                ;Г„ГҐГЄГ°ГҐГ¬ГҐГ­ГІГЁГ°Г®ГўГ Г­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ® Г• 
     dec Ghosts_position_X[si]
     ret
    
-Moving_chost_in_right:               ;Икрементирование позиции по Х   
+Moving_chost_in_right:               ;Г€ГЄГ°ГҐГ¬ГҐГ­ГІГЁГ°Г®ГўГ Г­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ® Г•   
     inc Ghosts_position_X[si]
     ret
 Rewriting_ghost_position endp
 
 ;/----------------------------------------------------------/    
-Drawing_chost proc                   ;Отрисовка призрака
-    mov ah, Ghosts_position_X[si]    ;Получение позиции призрака
+Drawing_chost proc                   ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  ГЇГ°ГЁГ§Г°Г ГЄГ 
+    mov ah, Ghosts_position_X[si]    ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ°ГЁГ§Г°Г ГЄГ 
     mov al, Ghosts_position_Y[si]
     
-    mov bl, Ghosts_colors[si]        ;Получение цвета
-    cmp bl, 0                        ;Если синий
+    mov bl, Ghosts_colors[si]        ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¶ГўГҐГІГ 
+    cmp bl, 0                        ;Г…Г±Г«ГЁ Г±ГЁГ­ГЁГ©
     je Drawing_chost_on_blue
-    cmp bl, 1                        ;Если зеленый
+    cmp bl, 1                        ;Г…Г±Г«ГЁ Г§ГҐГ«ГҐГ­Г»Г©
     je Drawing_chost_on_green
-    cmp bl, 2                        ;Если фиолетовый
+    cmp bl, 2                        ;Г…Г±Г«ГЁ ГґГЁГ®Г«ГҐГІГ®ГўГ»Г©
     je Drawing_chost_on_purple
-    cmp bl, 3                        ;Если серый
+    cmp bl, 3                        ;Г…Г±Г«ГЁ Г±ГҐГ°Г»Г©
     je Drawing_chost_on_gray 
     
-Drawing_chost_on_blue:               ;Отрисовка синего призрака
+Drawing_chost_on_blue:               ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  Г±ГЁГ­ГҐГЈГ® ГЇГ°ГЁГ§Г°Г ГЄГ 
     Draw_element Ghost_blue
     jmp Drawing_chost_complete
     
-Drawing_chost_on_green:              ;Отрисовка зеленого призрака
+Drawing_chost_on_green:              ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  Г§ГҐГ«ГҐГ­Г®ГЈГ® ГЇГ°ГЁГ§Г°Г ГЄГ 
     Draw_element Ghost_green
     jmp Drawing_chost_complete
   
-Drawing_chost_on_purple:             ;Отрисовка фиолетового призрака
+Drawing_chost_on_purple:             ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  ГґГЁГ®Г«ГҐГІГ®ГўГ®ГЈГ® ГЇГ°ГЁГ§Г°Г ГЄГ 
     Draw_element Ghost_purple
     jmp Drawing_chost_complete
     
-Drawing_chost_on_gray:               ;Отрисовка серого призрака
+Drawing_chost_on_gray:               ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  Г±ГҐГ°Г®ГЈГ® ГЇГ°ГЁГ§Г°Г ГЄГ 
     Draw_element Ghost_gray
     jmp Drawing_chost_complete
     
@@ -1103,45 +1103,45 @@ Drawing_chost_complete:
 Drawing_chost endp         
 
 ;/---------------------------------------------------------------------/
-Getting_prev_direction proc          ;ПОЛУЧЕНИЕ ПРЫДЫДУШЕГО НАПРАВЛЕНИЯ
+Getting_prev_direction proc          ;ГЏГЋГ‹Г“Г—Г…ГЌГ€Г… ГЏГђГ›Г„Г›Г„Г“ГГ…ГѓГЋ ГЌГЂГЏГђГЂГ‚Г‹Г…ГЌГ€Гџ
     cmp bl, 2
-    jge If_current_left_right        ;Если текущее направление указывает налево или направо
-    jmp If_current_up_down           ;Если указывает на низ или верх
+    jge If_current_left_right        ;Г…Г±Г«ГЁ ГІГҐГЄГіГ№ГҐГҐ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ ГіГЄГ Г§Г»ГўГ ГҐГІ Г­Г Г«ГҐГўГ® ГЁГ«ГЁ Г­Г ГЇГ°Г ГўГ®
+    jmp If_current_up_down           ;Г…Г±Г«ГЁ ГіГЄГ Г§Г»ГўГ ГҐГІ Г­Г  Г­ГЁГ§ ГЁГ«ГЁ ГўГҐГ°Гµ
     
-If_current_left_right:               ;Если право-лево
+If_current_left_right:               ;Г…Г±Г«ГЁ ГЇГ°Г ГўГ®-Г«ГҐГўГ®
     cmp bl, 2
     je Left_to_right
     jmp Right_to_left 
     
-If_current_up_down:                  ;Если верх-низ
+If_current_up_down:                  ;Г…Г±Г«ГЁ ГўГҐГ°Гµ-Г­ГЁГ§
     cmp bl, 1
     je Down_to_up
     jmp Up_to_down
     
-Up_to_down:                          ;Если верх, то меняем на низ
+Up_to_down:                          ;Г…Г±Г«ГЁ ГўГҐГ°Гµ, ГІГ® Г¬ГҐГ­ГїГҐГ¬ Г­Г  Г­ГЁГ§
     mov bl, 1
     ret
          
-Down_to_up:                          ;Если низ, то меняем на верх
+Down_to_up:                          ;Г…Г±Г«ГЁ Г­ГЁГ§, ГІГ® Г¬ГҐГ­ГїГҐГ¬ Г­Г  ГўГҐГ°Гµ
     mov bl, 0
     ret
         
-Left_to_right:                       ;Если лево, то меняем на право
+Left_to_right:                       ;Г…Г±Г«ГЁ Г«ГҐГўГ®, ГІГ® Г¬ГҐГ­ГїГҐГ¬ Г­Г  ГЇГ°Г ГўГ®
     mov bl, 3
     ret 
         
-Right_to_left:                       ;Если право, то меняем 
+Right_to_left:                       ;Г…Г±Г«ГЁ ГЇГ°Г ГўГ®, ГІГ® Г¬ГҐГ­ГїГҐГ¬ 
     mov bl, 2        
     ret
 Getting_prev_direction endp
 
 ;/-----------------------------------------------------------------------/
-Moving_chosts proc                   ;ПЕРЕДВИЖЕНИЕ ПРИЗРАКОВ
+Moving_chosts proc                   ;ГЏГ…ГђГ…Г„Г‚Г€Г†Г…ГЌГ€Г… ГЏГђГ€Г‡ГђГЂГЉГЋГ‚
     push ax
     push bx
     push cx
                   
-    inc Ghosts_delay_counter        ;Получение числа задержки призраков 
+    inc Ghosts_delay_counter        ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г·ГЁГ±Г«Г  Г§Г Г¤ГҐГ°Г¦ГЄГЁ ГЇГ°ГЁГ§Г°Г ГЄГ®Гў 
     push ax
     mov ah, Ghosts_max_delay_moving 
     cmp Ghosts_delay_counter, ah
@@ -1149,40 +1149,40 @@ Moving_chosts proc                   ;ПЕРЕДВИЖЕНИЕ ПРИЗРАКОВ
     jne Moving_chosts_complete
         
     mov Ghosts_delay_counter, 0
-    Rewriting_param                 ;Пересчет парметров для рандома
+    Rewriting_param                 ;ГЏГҐГ°ГҐГ±Г·ГҐГІ ГЇГ Г°Г¬ГҐГІГ°Г®Гў Г¤Г«Гї Г°Г Г­Г¤Г®Г¬Г 
             
     mov cx, Max_count_of_ghosts
     mov si, 0
     
 Moving_chosts_loop: 
 Check_random_chosts_direction:
-    Get_random_number_macro 4       ;Получение рандомного направления
+    Get_random_number_macro 4       ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г°Г Г­Г¤Г®Г¬Г­Г®ГЈГ® Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї
     mov bl, al
     mov ah, Ghosts_position_X[si] 
     mov al, Ghosts_position_Y[si]
-    call Check_direction_object     ;Проверка на объект находящийся по данному направлению
+    call Check_direction_object     ;ГЏГ°Г®ГўГҐГ°ГЄГ  Г­Г  Г®ГЎГєГҐГЄГІ Г­Г ГµГ®Г¤ГїГ№ГЁГ©Г±Гї ГЇГ® Г¤Г Г­Г­Г®Г¬Гі Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГѕ
     
-    cmp ax, em                      ;Если по ходу движения пустое пространство
+    cmp ax, em                      ;Г…Г±Г«ГЁ ГЇГ® ГµГ®Г¤Гі Г¤ГўГЁГ¦ГҐГ­ГЁГї ГЇГіГ±ГІГ®ГҐ ГЇГ°Г®Г±ГІГ°Г Г­Г±ГІГўГ®
     je Check_prev_direction
-    cmp ax, wl                      ;Если стена, то пересчет рандомного направления
+    cmp ax, wl                      ;Г…Г±Г«ГЁ Г±ГІГҐГ­Г , ГІГ® ГЇГҐГ°ГҐГ±Г·ГҐГІ Г°Г Г­Г¤Г®Г¬Г­Г®ГЈГ® Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї
     je Check_random_chosts_direction
         
-Check_prev_direction:               ;Проверка предыдущего направления
+Check_prev_direction:               ;ГЏГ°Г®ГўГҐГ°ГЄГ  ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГҐГЈГ® Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї
     call Getting_prev_direction
     mov bh, Ghosts_current_direction[si]
     cmp bh, bl
-    je Check_random_chosts_direction ;Если предыдущее и текущее направления совпадают
+    je Check_random_chosts_direction ;Г…Г±Г«ГЁ ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГҐГҐ ГЁ ГІГҐГЄГіГ№ГҐГҐ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї Г±Г®ГўГЇГ Г¤Г ГѕГІ
             
 Set_ghosts_direction_on_next_:
-    call Getting_prev_direction     ;Обратное получение направления
+    call Getting_prev_direction     ;ГЋГЎГ°Г ГІГ­Г®ГҐ ГЇГ®Г«ГіГ·ГҐГ­ГЁГҐ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГї
     mov Ghosts_current_direction[si], bl
             
 Rebraw_chost:    
-    call Delete_chost                        ;Удаление призрака               
-    call Meeting_ghosts_with_apple_checking  ;Проверка встречи призрака с яблоком
-    call Rewriting_ghost_position            ;Перезапись позиции призрака
-    call Meeting_pacman_with_ghosts_checking ;Проверка встречи пакмана и призрака             
-    call Drawing_chost                       ;Перерисовывание призрака
+    call Delete_chost                        ;Г“Г¤Г Г«ГҐГ­ГЁГҐ ГЇГ°ГЁГ§Г°Г ГЄГ                
+    call Meeting_ghosts_with_apple_checking  ;ГЏГ°Г®ГўГҐГ°ГЄГ  ГўГ±ГІГ°ГҐГ·ГЁ ГЇГ°ГЁГ§Г°Г ГЄГ  Г± ГїГЎГ«Г®ГЄГ®Г¬
+    call Rewriting_ghost_position            ;ГЏГҐГ°ГҐГ§Г ГЇГЁГ±Гј ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ°ГЁГ§Г°Г ГЄГ 
+    call Meeting_pacman_with_ghosts_checking ;ГЏГ°Г®ГўГҐГ°ГЄГ  ГўГ±ГІГ°ГҐГ·ГЁ ГЇГ ГЄГ¬Г Г­Г  ГЁ ГЇГ°ГЁГ§Г°Г ГЄГ              
+    call Drawing_chost                       ;ГЏГҐГ°ГҐГ°ГЁГ±Г®ГўГ»ГўГ Г­ГЁГҐ ГЇГ°ГЁГ§Г°Г ГЄГ 
             
     inc si
 loop Moving_chosts_loop
@@ -1195,11 +1195,11 @@ Moving_chosts_complete:
 Moving_chosts endp               
                    
 ;/---------------------------------------------------------/           
-Convert_num_to_str proc      ;ПЕРЕВОД ИЗ ЧИСЛА В СТРОКУ
-    push bp                  ;Сохранение bp
-    mov bp, sp               ;Bp - вершина стека     
+Convert_num_to_str proc      ;ГЏГ…ГђГ…Г‚ГЋГ„ Г€Г‡ Г—Г€Г‘Г‹ГЂ Г‚ Г‘Г’ГђГЋГЉГ“
+    push bp                  ;Г‘Г®ГµГ°Г Г­ГҐГ­ГЁГҐ bp
+    mov bp, sp               ;Bp - ГўГҐГ°ГёГЁГ­Г  Г±ГІГҐГЄГ      
     mov ax, [bp + 6]
-    mov si, [bp + 4]         ;Считывание 4го параметра
+    mov si, [bp + 4]         ;Г‘Г·ГЁГІГ»ГўГ Г­ГЁГҐ 4ГЈГ® ГЇГ Г°Г Г¬ГҐГІГ°Г 
     
     xor cx, cx               
     mov bx, 10                
@@ -1207,16 +1207,16 @@ Convert_num_to_str proc      ;ПЕРЕВОД ИЗ ЧИСЛА В СТРОКУ
 Getting_number_digits:
     xor dx, dx
     div bx                    
-    push dx                  ;Занесение остатка  
-    inc cx                   ;Получение числа разрядов
-    cmp ax, 0                ;Пока не закончилась старшая часть
+    push dx                  ;Г‡Г Г­ГҐГ±ГҐГ­ГЁГҐ Г®Г±ГІГ ГІГЄГ   
+    inc cx                   ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г·ГЁГ±Г«Г  Г°Г Г§Г°ГїГ¤Г®Гў
+    cmp ax, 0                ;ГЏГ®ГЄГ  Г­ГҐ Г§Г ГЄГ®Г­Г·ГЁГ«Г Г±Гј Г±ГІГ Г°ГёГ Гї Г·Г Г±ГІГј
 jne Getting_number_digits
         
 Draw_digit_loop:
     pop dx
-    add dx, 30h              ;Перевод в сивольное значение числа
+    add dx, 30h              ;ГЏГҐГ°ГҐГўГ®Г¤ Гў Г±ГЁГўГ®Г«ГјГ­Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ Г·ГЁГ±Г«Г 
     mov dh, Green_colour     
-    mov word ptr [si], dx    ;Запись счета в переменную
+    mov word ptr [si], dx    ;Г‡Г ГЇГЁГ±Гј Г±Г·ГҐГІГ  Гў ГЇГҐГ°ГҐГ¬ГҐГ­Г­ГіГѕ
     add si, 2
 loop Draw_digit_loop
 
@@ -1225,62 +1225,62 @@ loop Draw_digit_loop
 Convert_num_to_str endp
 
 ;/----------------------------------------------------------/
-Drawing_count_of_apple proc     ;ОТРИСОВКА ЧИСЛА ЯБЛОК
+Drawing_count_of_apple proc     ;ГЋГ’ГђГ€Г‘ГЋГ‚ГЉГЂ Г—Г€Г‘Г‹ГЂ ГџГЃГ‹ГЋГЉ
     xor cx, cx
     mov cl, Count_of_apple
     push cx
     push offset Apple_counting_str   
-    call Convert_num_to_str     ;Перевод числа в строку и отрисовка 
+    call Convert_num_to_str     ;ГЏГҐГ°ГҐГўГ®Г¤ Г·ГЁГ±Г«Г  Гў Г±ГІГ°Г®ГЄГі ГЁ Г®ГІГ°ГЁГ±Г®ГўГЄГ  
 
     mov si, offset Apple_counting_str
     mov di, Total_current_score_offset
     mov cx, 4                
-    rep movsw                   ;Перенос строки из DS:SI в ES:DI
+    rep movsw                   ;ГЏГҐГ°ГҐГ­Г®Г± Г±ГІГ°Г®ГЄГЁ ГЁГ§ DS:SI Гў ES:DI
     ret
 Drawing_count_of_apple endp
 
 ;/----------------------------------------------------------/
-Drawing_apple proc              ;ОТРИСОВКА ЯБЛОКА
+Drawing_apple proc              ;ГЋГ’ГђГ€Г‘ГЋГ‚ГЉГЂ ГџГЃГ‹ГЋГЉГЂ
     mov ah, Apple_position_X 
     mov al, Apple_position_Y
-    Draw_element Apple          ;Получение яблока 
+    Draw_element Apple          ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГїГЎГ«Г®ГЄГ  
     ret
 Drawing_apple endp
 
 ;/----------------------------------------------------------/
-Apple_appearance proc           ;ПОЯВЛЕНИЕ ЯБЛОКА
+Apple_appearance proc           ;ГЏГЋГџГ‚Г‹Г…ГЌГ€Г… ГџГЃГ‹ГЋГЉГЂ
     Rewriting_param
          
 Setting_apple_position:
-    ;Get_random_number_macro Field_length_X ;Получение координат яблока
-    Get_random_number_macro Field_length   ;Получение позиции где появится призрак
+    ;Get_random_number_macro Field_length_X ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІ ГїГЎГ«Г®ГЄГ 
+    Get_random_number_macro Field_length   ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЈГ¤ГҐ ГЇГ®ГїГўГЁГІГ±Гї ГЇГ°ГЁГ§Г°Г ГЄ
     mov Apple_position_X, al 
-    Get_random_number_macro Field_length   ;Получение позиции где появится призрак
+    Get_random_number_macro Field_length   ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЈГ¤ГҐ ГЇГ®ГїГўГЁГІГ±Гї ГЇГ°ГЁГ§Г°Г ГЄ
     ;Get_random_number_macro Field_length_Y
     mov Apple_position_Y, al  
     
     mov ah, Apple_position_X 
     mov al, Apple_position_Y
-    Get_element                 ;Получение элемента по позиции установкаи яблока
+    Get_element                 ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ  ГЇГ® ГЇГ®Г§ГЁГ¶ГЁГЁ ГіГ±ГІГ Г­Г®ГўГЄГ ГЁ ГїГЎГ«Г®ГЄГ 
     cmp ax, em
     je Create_apple
     jmp Setting_apple_position
     
 Create_apple:
-    call Drawing_apple          ;Отрисовка яблока
-    call Drawing_count_of_apple ;Отрисовка счета
+    call Drawing_apple          ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  ГїГЎГ«Г®ГЄГ 
+    call Drawing_count_of_apple ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  Г±Г·ГҐГІГ 
     ret
 Apple_appearance endp   
 
 ;/----------------------------------------------------------/
-Draw_count_of_heart proc           ;ОТРИСОВКА ЖИЗНЕЙ
+Draw_count_of_heart proc           ;ГЋГ’ГђГ€Г‘ГЋГ‚ГЉГЂ Г†Г€Г‡ГЌГ…Г‰
     push ax
     push bx 
     
-    mov ah, Health_position_X      ;Получение координат 
+    mov ah, Health_position_X      ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІ 
     mov al, Health_position_Y 
     
-    mov bl, Count_of_health        ;Получение числа жизней
+    mov bl, Count_of_health        ;ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г·ГЁГ±Г«Г  Г¦ГЁГ§Г­ГҐГ©
     cmp bl, 3
     je Draw_tree_health
     cmp bl, 2
@@ -1290,25 +1290,25 @@ Draw_count_of_heart proc           ;ОТРИСОВКА ЖИЗНЕЙ
     cmp bl, 0 
     je Draw_zero_health
     
-Draw_tree_health:                  ;Отрисовка 3 жизней
+Draw_tree_health:                  ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  3 Г¦ГЁГ§Г­ГҐГ©
     Draw_element Health_tree     
     pop bx
     pop ax
     ret    
 
-Draw_two_health:                   ;Отрисовка 2 жизней
+Draw_two_health:                   ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  2 Г¦ГЁГ§Г­ГҐГ©
     Draw_element Health_two     
     pop bx
     pop ax
     ret    
 
-Draw_one_health:                   ;Отрисовка 1 жизни
+Draw_one_health:                   ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  1 Г¦ГЁГ§Г­ГЁ
     Draw_element Health_one     
     pop bx
     pop ax
     ret     
     
-Draw_zero_health:                  ;Отрисовка 0 жизни
+Draw_zero_health:                  ;ГЋГІГ°ГЁГ±Г®ГўГЄГ  0 Г¦ГЁГ§Г­ГЁ
     Draw_element Health_zero     
     pop bx
     pop ax
@@ -1316,19 +1316,19 @@ Draw_zero_health:                  ;Отрисовка 0 жизни
 Draw_count_of_heart endp
 
 ;/------------------------------------------------------/ 
-Select_difficulty proc             ;ВЫБОР СЛОЖНОСТИ
+Select_difficulty proc             ;Г‚Г›ГЃГЋГђ Г‘Г‹ГЋГ†ГЌГЋГ‘Г’Г€
     Write_macro Hello_str
     Write_macro Easy_str
     Write_macro Medium_str
     Write_macro Hard_str    
     Write_macro Unreal_str
     
-Enter_difficulty_selection:     ;Ввод выбора игроком режима
-    mov ah,01h                  ;Считывание символа из стандартного в/вв
+Enter_difficulty_selection:     ;Г‚ГўГ®Г¤ ГўГ»ГЎГ®Г°Г  ГЁГЈГ°Г®ГЄГ®Г¬ Г°ГҐГ¦ГЁГ¬Г 
+    mov ah,01h                  ;Г‘Г·ГЁГІГ»ГўГ Г­ГЁГҐ Г±ГЁГ¬ГўГ®Г«Г  ГЁГ§ Г±ГІГ Г­Г¤Г Г°ГІГ­Г®ГЈГ® Гў/ГўГў
     int 21h
-    Clear_keyboard_buf          ;Очистка буфера клавиатуры
+    Clear_keyboard_buf          ;ГЋГ·ГЁГ±ГІГЄГ  ГЎГіГґГҐГ°Г  ГЄГ«Г ГўГЁГ ГІГіГ°Г»
                                 
-    cmp al, '1'                 ;Выбор сложности
+    cmp al, '1'                 ;Г‚Г»ГЎГ®Г° Г±Г«Г®Г¦Г­Г®Г±ГІГЁ
     je Easy_dif
     cmp al, '2'
     je Medium_dif
@@ -1338,7 +1338,7 @@ Enter_difficulty_selection:     ;Ввод выбора игроком режима
     je Unreal_dif   
     jmp Enter_difficulty_selection
     
-Easy_dif:                       ;Легкая сложность
+Easy_dif:                       ;Г‹ГҐГЈГЄГ Гї Г±Г«Г®Г¦Г­Г®Г±ГІГј
     mov ah, Easy_apples  
     mov Max_count_of_apples, ah
     mov ax, Easy_chosts  
@@ -1348,7 +1348,7 @@ Easy_dif:                       ;Легкая сложность
     xor ax,ax
     ret
     
-Medium_dif:                     ;Средняя сложность
+Medium_dif:                     ;Г‘Г°ГҐГ¤Г­ГїГї Г±Г«Г®Г¦Г­Г®Г±ГІГј
     mov ah, Medium_apples  
     mov Max_count_of_apples, ah 
     mov ax, Medium_chosts  
@@ -1358,7 +1358,7 @@ Medium_dif:                     ;Средняя сложность
     xor ax,ax
     ret    
     
-Hard_dif:                       ;Тяжелая сложность
+Hard_dif:                       ;Г’ГїГ¦ГҐГ«Г Гї Г±Г«Г®Г¦Г­Г®Г±ГІГј
     mov ah, Hard_apples  
     mov Max_count_of_apples, ah
     mov ax, Hard_chosts  
@@ -1370,7 +1370,7 @@ Hard_dif:                       ;Тяжелая сложность
     xor ax,ax
     ret
     
-Unreal_dif:                     ;Нереальная сложность
+Unreal_dif:                     ;ГЌГҐГ°ГҐГ Г«ГјГ­Г Гї Г±Г«Г®Г¦Г­Г®Г±ГІГј
     mov ah, Unreal_apples  
     mov Max_count_of_apples, ah
     mov ax, Unreal_chosts  
