@@ -1,4 +1,4 @@
-name 'lab4'
+name 'lab4';ПАКМАН
 
 .model small
 .stack 100h
