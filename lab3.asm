@@ -1,4 +1,4 @@
-name 'lab3'
+name 'lab3';10 РІР°СЂ
 
 .model small
 .stack 100h  
@@ -6,7 +6,7 @@ name 'lab3'
 
 jmp start
 
-Output_string_proc proc                ;Процедура вывода строки
+Output_string_proc proc                ;РџСЂРѕС†РµРґСѓСЂР° РІС‹РІРѕРґР° СЃС‚СЂРѕРєРё
     mov ah, 09h
     int 21h
     ret
@@ -14,7 +14,7 @@ Output_string_proc endp
                         
                         
                         
-Input_array_length_proc proc           ;Процедура ввода размерности массива
+Input_array_length_proc proc           ;РџСЂРѕС†РµРґСѓСЂР° РІРІРѕРґР° СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё РјР°СЃСЃРёРІР°
     mov cx, 1 
     
 Input_array_length_loop:
@@ -22,19 +22,19 @@ Input_array_length_loop:
     call Output_string_proc
                  
     push cx
-    call Input_element_proc            ;Вызов процедуры ввода элемента
+    call Input_element_proc            ;Р’С‹Р·РѕРІ РїСЂРѕС†РµРґСѓСЂС‹ РІРІРѕРґР° СЌР»РµРјРµРЅС‚Р°
     pop cx
     
     cmp size_,0
-    jle Length_error                   ;Если меньше 0  
+    jle Length_error                   ;Р•СЃР»Рё РјРµРЅСЊС€Рµ 0  
     
     cmp size_,30 
-    jg Length_error                    ;Если больше 30
+    jg Length_error                    ;Р•СЃР»Рё Р±РѕР»СЊС€Рµ 30
     
     jmp End_input_length
 
 loop Input_array_length_loop 
-                                       ;Если не подходящее значение
+                                       ;Р•СЃР»Рё РЅРµ РїРѕРґС…РѕРґСЏС‰РµРµ Р·РЅР°С‡РµРЅРёРµ
 Length_error:
     ;xor ax,ax
     inc cx
@@ -47,10 +47,10 @@ ret
 endp
           
        
-Bubble_proc proc near        ;Процедура сортировки
+Bubble_proc proc near        ;РџСЂРѕС†РµРґСѓСЂР° СЃРѕСЂС‚РёСЂРѕРІРєРё
     New_array equ di           
     cmp cx, 1
-    jle End_of_sort          ;Если в массиве 1 элемент
+    jle End_of_sort          ;Р•СЃР»Рё РІ РјР°СЃСЃРёРІРµ 1 СЌР»РµРјРµРЅС‚
     mov dx, si               
     dec cx                   
     
@@ -58,32 +58,32 @@ First_cicle:
     push cx                  
     mov bx, size_
     add bx, dx               
-    dec bx                   ;Смещение буфера + size_ - 1
+    dec bx                   ;РЎРјРµС‰РµРЅРёРµ Р±СѓС„РµСЂР° + size_ - 1
     
     sub bx, si
     mov cx, bx
-    mov di, dx               ;Получение индекса на первое число буфера
+    mov di, dx               ;РџРѕР»СѓС‡РµРЅРёРµ РёРЅРґРµРєСЃР° РЅР° РїРµСЂРІРѕРµ С‡РёСЃР»Рѕ Р±СѓС„РµСЂР°
     
 Second_cicle:
     mov ax, New_array[di+2] 
     cmp New_array[di], ax  
-    jle Return_to_loop       ;Если второе значение массива больше первого, то переход
+    jle Return_to_loop       ;Р•СЃР»Рё РІС‚РѕСЂРѕРµ Р·РЅР°С‡РµРЅРёРµ РјР°СЃСЃРёРІР° Р±РѕР»СЊС€Рµ РїРµСЂРІРѕРіРѕ, С‚Рѕ РїРµСЂРµС…РѕРґ
     
-Swap:                        ;Замена
+Swap:                        ;Р—Р°РјРµРЅР°
     mov bx, New_array[di]
     mov ax, New_array[di+2]
     mov New_array[di], ax
     mov New_array[di+2], bx 
    
 Return_to_loop:    
-    add di,2                 ;Шаг по 2 байта второго внутреннего цикла
+    add di,2                 ;РЁР°Рі РїРѕ 2 Р±Р°Р№С‚Р° РІС‚РѕСЂРѕРіРѕ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ С†РёРєР»Р°
 loop Second_cicle 
     inc si
     pop cx
 loop First_cicle   
     
 End_of_sort:
-    ret                      ;Возврат из процедуры
+    ret                      ;Р’РѕР·РІСЂР°С‚ РёР· РїСЂРѕС†РµРґСѓСЂС‹
 endp Bubble_proc
 
        
@@ -91,21 +91,21 @@ endp Bubble_proc
        
        
 Output_array_proc proc near
-    push bp                  ;Помещение вершины регистров стека
+    push bp                  ;РџРѕРјРµС‰РµРЅРёРµ РІРµСЂС€РёРЅС‹ СЂРµРіРёСЃС‚СЂРѕРІ СЃС‚РµРєР°
     mov bp, sp 
     
 Print_array:
-      mov ax, ds:[di]        ;Загрузка элемента в регистр
+      mov ax, ds:[di]        ;Р—Р°РіСЂСѓР·РєР° СЌР»РµРјРµРЅС‚Р° РІ СЂРµРіРёСЃС‚СЂ
       mov bx, ds:[di]
-      cmp bx, 0              ;Если нуль, то печать 
+      cmp bx, 0              ;Р•СЃР»Рё РЅСѓР»СЊ, С‚Рѕ РїРµС‡Р°С‚СЊ 
       jne Turn_over  
       
       mov dl, bl              
       mov ah, 2
-      add dl, 30h            ;Прибавление 48 и запись в ax
+      add dl, 30h            ;РџСЂРёР±Р°РІР»РµРЅРёРµ 48 Рё Р·Р°РїРёСЃСЊ РІ ax
       int 21h   
       
-      mov dl, 020h           ;Добавление пробела
+      mov dl, 020h           ;Р”РѕР±Р°РІР»РµРЅРёРµ РїСЂРѕР±РµР»Р°
       add di,2
       int 21h 
        
@@ -113,68 +113,68 @@ Print_array:
       jmp end_print_array  
      
 add_minus:
-      push ax                 ;Занесение в стек значения по ax
+      push ax                 ;Р—Р°РЅРµСЃРµРЅРёРµ РІ СЃС‚РµРє Р·РЅР°С‡РµРЅРёСЏ РїРѕ ax
        
       mov ah, 2
-      mov dl, '-'             ;Занесение в ах минуса
+      mov dl, '-'             ;Р—Р°РЅРµСЃРµРЅРёРµ РІ Р°С… РјРёРЅСѓСЃР°
       int 21h     
       
-      pop ax                  ;Возврат ах из стека
+      pop ax                  ;Р’РѕР·РІСЂР°С‚ Р°С… РёР· СЃС‚РµРєР°
       neg ax
       jmp end_add_minus  
       
 Turn_over:
-      neg ax                  ;Изменение знака числа на противоложный
-      jns add_minus           ;Если отсутствует знак(положительное), то следует добавить минус
+      neg ax                  ;РР·РјРµРЅРµРЅРёРµ Р·РЅР°РєР° С‡РёСЃР»Р° РЅР° РїСЂРѕС‚РёРІРѕР»РѕР¶РЅС‹Р№
+      jns add_minus           ;Р•СЃР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ Р·РЅР°Рє(РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ), С‚Рѕ СЃР»РµРґСѓРµС‚ РґРѕР±Р°РІРёС‚СЊ РјРёРЅСѓСЃ
       
 end_add_minus:       
       neg ax    
       
 sign2:       
-      neg bx                  ;Изменение знака bx на протиположный
-      js sign2                ;Пока минус
-      push cx                 ;Занесение в стек фактического размера массива
-      mov si, 0               ;Счетчик разрядов цифр в числе
-      xor dx, dx              ;Обнуление dx
+      neg bx                  ;РР·РјРµРЅРµРЅРёРµ Р·РЅР°РєР° bx РЅР° РїСЂРѕС‚РёРїРѕР»РѕР¶РЅС‹Р№
+      js sign2                ;РџРѕРєР° РјРёРЅСѓСЃ
+      push cx                 ;Р—Р°РЅРµСЃРµРЅРёРµ РІ СЃС‚РµРє С„Р°РєС‚РёС‡РµСЃРєРѕРіРѕ СЂР°Р·РјРµСЂР° РјР°СЃСЃРёРІР°
+      mov si, 0               ;РЎС‡РµС‚С‡РёРє СЂР°Р·СЂСЏРґРѕРІ С†РёС„СЂ РІ С‡РёСЃР»Рµ
+      xor dx, dx              ;РћР±РЅСѓР»РµРЅРёРµ dx
       push bx                 
-      mov bx, 10              ;Делитель разряда
-      mov cx, 5               ;Максимальное количество разрядов
+      mov bx, 10              ;Р”РµР»РёС‚РµР»СЊ СЂР°Р·СЂСЏРґР°
+      mov cx, 5               ;РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЂР°Р·СЂСЏРґРѕРІ
       
-Size_of_number:               ;Получение размера байтов числа
-      cmp ax, 10              ;Если значение меньше 10
+Size_of_number:               ;РџРѕР»СѓС‡РµРЅРёРµ СЂР°Р·РјРµСЂР° Р±Р°Р№С‚РѕРІ С‡РёСЃР»Р°
+      cmp ax, 10              ;Р•СЃР»Рё Р·РЅР°С‡РµРЅРёРµ РјРµРЅСЊС€Рµ 10
       jl Increment_counter_of_actual_size
-      div bx                  ;Деление значения аккумулятора на bx c записью в приемник
+      div bx                  ;Р”РµР»РµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ Р°РєРєСѓРјСѓР»СЏС‚РѕСЂР° РЅР° bx c Р·Р°РїРёСЃСЊСЋ РІ РїСЂРёРµРјРЅРёРє
       xor dx, dx
-      inc si                  ;Инкрементация si
-loop Size_of_number           ;Пока cx
+      inc si                  ;РРЅРєСЂРµРјРµРЅС‚Р°С†РёСЏ si
+loop Size_of_number           ;РџРѕРєР° cx
       
 Increment_counter_of_actual_size: 
-    pop bx                    ;Считывание значения регистра базы
+    pop bx                    ;РЎС‡РёС‚С‹РІР°РЅРёРµ Р·РЅР°С‡РµРЅРёСЏ СЂРµРіРёСЃС‚СЂР° Р±Р°Р·С‹
     inc si   
        
 Getting_number:     
       mov ax, bx 
-      mov cx, si              ;Записывание в счетчик значения кол-ва разрядов числа
+      mov cx, si              ;Р—Р°РїРёСЃС‹РІР°РЅРёРµ РІ СЃС‡РµС‚С‡РёРє Р·РЅР°С‡РµРЅРёСЏ РєРѕР»-РІР° СЂР°Р·СЂСЏРґРѕРІ С‡РёСЃР»Р°
       dec cx 
       push bx
-      mov bx, 10              ;Присваиваем дельтель разряда
+      mov bx, 10              ;РџСЂРёСЃРІР°РёРІР°РµРј РґРµР»СЊС‚РµР»СЊ СЂР°Р·СЂСЏРґР°
       
-Div_on_ten:                   ;Деление разряд на 10
-     cmp cx, 0                ;Если значение счетчика разряда 0
+Div_on_ten:                   ;Р”РµР»РµРЅРёРµ СЂР°Р·СЂСЏРґ РЅР° 10
+     cmp cx, 0                ;Р•СЃР»Рё Р·РЅР°С‡РµРЅРёРµ СЃС‡РµС‚С‡РёРєР° СЂР°Р·СЂСЏРґР° 0
      je End_of_div
-     div bx                   ;Деление аккумулятора на bx с записью в приемник
-     xor dx, dx               ;Обнуление остатка
+     div bx                   ;Р”РµР»РµРЅРёРµ Р°РєРєСѓРјСѓР»СЏС‚РѕСЂР° РЅР° bx СЃ Р·Р°РїРёСЃСЊСЋ РІ РїСЂРёРµРјРЅРёРє
+     xor dx, dx               ;РћР±РЅСѓР»РµРЅРёРµ РѕСЃС‚Р°С‚РєР°
      loop Div_on_ten  
      
-End_of_div:                   ;Завершение деления разряда
-     push ax                  ;Заносим в стек значение
+End_of_div:                   ;Р—Р°РІРµСЂС€РµРЅРёРµ РґРµР»РµРЅРёСЏ СЂР°Р·СЂСЏРґР°
+     push ax                  ;Р—Р°РЅРѕСЃРёРј РІ СЃС‚РµРє Р·РЅР°С‡РµРЅРёРµ
      mov dl, al
      mov ah, 2
-     add dl, 30h              ;Прибавляем к аскикоду 48
+     add dl, 30h              ;РџСЂРёР±Р°РІР»СЏРµРј Рє Р°СЃРєРёРєРѕРґСѓ 48
      int 21h  
      
      pop ax
-     mov cx, si               ;Получаем разряд следующей цифры числа
+     mov cx, si               ;РџРѕР»СѓС‡Р°РµРј СЂР°Р·СЂСЏРґ СЃР»РµРґСѓСЋС‰РµР№ С†РёС„СЂС‹ С‡РёСЃР»Р°
      dec cx   
      
 Inverse_multi:
@@ -187,14 +187,14 @@ Completed_inverse_multi:
 
    pop bx
    sub bx, ax   
-   dec si                      ;Уменьшение разряда числа на 1
-   cmp si, 0                   ;Если разряды числа закончились
-   jne Getting_number          ;Полчение следующего разряда числа
+   dec si                      ;РЈРјРµРЅСЊС€РµРЅРёРµ СЂР°Р·СЂСЏРґР° С‡РёСЃР»Р° РЅР° 1
+   cmp si, 0                   ;Р•СЃР»Рё СЂР°Р·СЂСЏРґС‹ С‡РёСЃР»Р° Р·Р°РєРѕРЅС‡РёР»РёСЃСЊ
+   jne Getting_number          ;РџРѕР»С‡РµРЅРёРµ СЃР»РµРґСѓСЋС‰РµРіРѕ СЂР°Р·СЂСЏРґР° С‡РёСЃР»Р°
     
-   pop cx                      ;Получение из стека размера массива
-   add di,2                    ;Шаг массива 2 байта 
+   pop cx                      ;РџРѕР»СѓС‡РµРЅРёРµ РёР· СЃС‚РµРєР° СЂР°Р·РјРµСЂР° РјР°СЃСЃРёРІР°
+   add di,2                    ;РЁР°Рі РјР°СЃСЃРёРІР° 2 Р±Р°Р№С‚Р° 
    mov ah, 2
-   mov dl, 020h                ;Записывание пробела в аккумулятор
+   mov dl, 020h                ;Р—Р°РїРёСЃС‹РІР°РЅРёРµ РїСЂРѕР±РµР»Р° РІ Р°РєРєСѓРјСѓР»СЏС‚РѕСЂ
    int 21h  
       
 loop Print_array  
@@ -203,65 +203,65 @@ end_print_array:
     mov sp, bp 
     pop bp
     ret  
-Output_array_proc endp         ;Завершение вывода      
+Output_array_proc endp         ;Р—Р°РІРµСЂС€РµРЅРёРµ РІС‹РІРѕРґР°      
 
 
 
                                ;/*----------------------------INPUT LENGTH--------------------------------------------*/ 
 
 Input_element_proc proc near
-    push bp                    ;Помещение вершины регистров стека
+    push bp                    ;РџРѕРјРµС‰РµРЅРёРµ РІРµСЂС€РёРЅС‹ СЂРµРіРёСЃС‚СЂРѕРІ СЃС‚РµРєР°
     mov bp, sp 
 
 Entering_number1: 
-    xor bx, bx                  ;Обнуляем значение регистра базы 
+    xor bx, bx                  ;РћР±РЅСѓР»СЏРµРј Р·РЅР°С‡РµРЅРёРµ СЂРµРіРёСЃС‚СЂР° Р±Р°Р·С‹ 
     
     mov ah, 0Ah     
-    mov offset buffer1, buf_size_length ;Выделяем под буфер максимальный размер
+    mov offset buffer1, buf_size_length ;Р’С‹РґРµР»СЏРµРј РїРѕРґ Р±СѓС„РµСЂ РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ
     mov dx, offset buffer1
-    int 21h                     ;Вводим строку
+    int 21h                     ;Р’РІРѕРґРёРј СЃС‚СЂРѕРєСѓ
     
     mov dx, 0   
     mov si, 2 
-    cmp buffer1[si], 0Dh         ;Проверка на конец строки
+    cmp buffer1[si], 0Dh         ;РџСЂРѕРІРµСЂРєР° РЅР° РєРѕРЅРµС† СЃС‚СЂРѕРєРё
     je Uncorrect_value1
      
-    cmp buffer1[si], '-'         ;Если встретился минус
+    cmp buffer1[si], '-'         ;Р•СЃР»Рё РІСЃС‚СЂРµС‚РёР»СЃСЏ РјРёРЅСѓСЃ
     je Uncorrect_value1
       
-    cmp buffer1[si], '0'         ;Если нуль
+    cmp buffer1[si], '0'         ;Р•СЃР»Рё РЅСѓР»СЊ
     je only_zero_check1
      
     jmp Validating_value1  
     
 only_zero_check1:                
-    cmp buffer1[si+1],0          ;Если не конец строки
+    cmp buffer1[si+1],0          ;Р•СЃР»Рё РЅРµ РєРѕРЅРµС† СЃС‚СЂРѕРєРё
     je Uncorrect_value1
     
-    cmp buffer1[si+1], 0Dh       ;Если не конец строки
+    cmp buffer1[si+1], 0Dh       ;Р•СЃР»Рё РЅРµ РєРѕРЅРµС† СЃС‚СЂРѕРєРё
     jne Next_byte1
     je Uncorrect_value1  
      
-Validating_value1:               ;Проверка полученного числа
-    cmp buffer1[si], 0Dh         ;Если конец числа
+Validating_value1:               ;РџСЂРѕРІРµСЂРєР° РїРѕР»СѓС‡РµРЅРЅРѕРіРѕ С‡РёСЃР»Р°
+    cmp buffer1[si], 0Dh         ;Р•СЃР»Рё РєРѕРЅРµС† С‡РёСЃР»Р°
     je Number_processing1
-    cmp buffer1[si], '9'         ;Если аскикод символа больше 9
+    cmp buffer1[si], '9'         ;Р•СЃР»Рё Р°СЃРєРёРєРѕРґ СЃРёРјРІРѕР»Р° Р±РѕР»СЊС€Рµ 9
     jg Uncorrect_value1
-    cmp buffer1[si], '0'         ;Если аскикод символа меньше 0
+    cmp buffer1[si], '0'         ;Р•СЃР»Рё Р°СЃРєРёРєРѕРґ СЃРёРјРІРѕР»Р° РјРµРЅСЊС€Рµ 0
     jl Uncorrect_value1
-    inc dx                       ;Инкрементируем число байтов числа
+    inc dx                       ;РРЅРєСЂРµРјРµРЅС‚РёСЂСѓРµРј С‡РёСЃР»Рѕ Р±Р°Р№С‚РѕРІ С‡РёСЃР»Р°
        
-Next_byte1:                      ;Следующий байт
+Next_byte1:                      ;РЎР»РµРґСѓСЋС‰РёР№ Р±Р°Р№С‚
     inc si
     jmp Validating_value1   
     
-Number_processing1:              ;Обработка числа
+Number_processing1:              ;РћР±СЂР°Р±РѕС‚РєР° С‡РёСЃР»Р°
      cmp dx, 2
      jl Small_number1            
      mov si, 2 
      
-If_positivie_number1:            ;Если положительное число
-     cmp buffer1[si], '3'        ;Посимвольное сравнение буфера
+If_positivie_number1:            ;Р•СЃР»Рё РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ С‡РёСЃР»Рѕ
+     cmp buffer1[si], '3'        ;РџРѕСЃРёРјРІРѕР»СЊРЅРѕРµ СЃСЂР°РІРЅРµРЅРёРµ Р±СѓС„РµСЂР°
      jg Uncorrect_value1
      jl Small_number1
      inc si
@@ -277,43 +277,43 @@ Small_number1:
     
 Check_on_zero1:    
     cmp buffer1[si], '0'
-    jne Convertation_on_number1  ;Если не нулевое
+    jne Convertation_on_number1  ;Р•СЃР»Рё РЅРµ РЅСѓР»РµРІРѕРµ
     inc si 
                            ;/*----------------convertation---------------*/
-Convertation_on_number1:         ;Конвертация
-    cmp buffer1[si], 0Dh         ;Если достигнут конец буффера
-    je Сonversion_completion1
-    xor ax, ax                   ;Обнуление регистра
-    mov al, buffer1[si]          ;Запись символа
-    sub ax, 30h                  ;Отнимаем аски символ 0
+Convertation_on_number1:         ;РљРѕРЅРІРµСЂС‚Р°С†РёСЏ
+    cmp buffer1[si], 0Dh         ;Р•СЃР»Рё РґРѕСЃС‚РёРіРЅСѓС‚ РєРѕРЅРµС† Р±СѓС„С„РµСЂР°
+    je РЎonversion_completion1
+    xor ax, ax                   ;РћР±РЅСѓР»РµРЅРёРµ СЂРµРіРёСЃС‚СЂР°
+    mov al, buffer1[si]          ;Р—Р°РїРёСЃСЊ СЃРёРјРІРѕР»Р°
+    sub ax, 30h                  ;РћС‚РЅРёРјР°РµРј Р°СЃРєРё СЃРёРјРІРѕР» 0
    
     push cx
     mov cx, dx  
     push dx   
-    push bx                     ;Заносим в стек фактическое значение числа
+    push bx                     ;Р—Р°РЅРѕСЃРёРј РІ СЃС‚РµРє С„Р°РєС‚РёС‡РµСЃРєРѕРµ Р·РЅР°С‡РµРЅРёРµ С‡РёСЃР»Р°
     mov bx, 10  
     
-Mul_on_ten1:                     ;Получение количества разрядов числа
+Mul_on_ten1:                     ;РџРѕР»СѓС‡РµРЅРёРµ РєРѕР»РёС‡РµСЃС‚РІР° СЂР°Р·СЂСЏРґРѕРІ С‡РёСЃР»Р°
     cmp cx, 0
     je End_of_mul1
-    mul bx                      ;Умножение AX на BX с записью в приемник
-    dec cx                      ;Уменьшение количества разрядов
+    mul bx                      ;РЈРјРЅРѕР¶РµРЅРёРµ AX РЅР° BX СЃ Р·Р°РїРёСЃСЊСЋ РІ РїСЂРёРµРјРЅРёРє
+    dec cx                      ;РЈРјРµРЅСЊС€РµРЅРёРµ РєРѕР»РёС‡РµСЃС‚РІР° СЂР°Р·СЂСЏРґРѕРІ
     jmp Mul_on_ten1 
      
-End_of_mul1:                     ;Завершение получения кол-ва разрядов
-    pop bx                      ;Получение значения
+End_of_mul1:                     ;Р—Р°РІРµСЂС€РµРЅРёРµ РїРѕР»СѓС‡РµРЅРёСЏ РєРѕР»-РІР° СЂР°Р·СЂСЏРґРѕРІ
+    pop bx                      ;РџРѕР»СѓС‡РµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ
     pop dx                      ;
-    dec dx                      ;Уменьшение счетчика
+    dec dx                      ;РЈРјРµРЅСЊС€РµРЅРёРµ СЃС‡РµС‚С‡РёРєР°
     pop cx
-    inc si                      ;Инкрементируем счетчик
-    add bx, ax                  ;Прибавляем полученные аккумулятор к разрядному bx
+    inc si                      ;РРЅРєСЂРµРјРµРЅС‚РёСЂСѓРµРј СЃС‡РµС‚С‡РёРє
+    add bx, ax                  ;РџСЂРёР±Р°РІР»СЏРµРј РїРѕР»СѓС‡РµРЅРЅС‹Рµ Р°РєРєСѓРјСѓР»СЏС‚РѕСЂ Рє СЂР°Р·СЂСЏРґРЅРѕРјСѓ bx
     jmp Convertation_on_number1 
                                  ;/*---------------------------------------*/
-Сonversion_completion1: 
+РЎonversion_completion1: 
     mov si, 2
     
-Positive_value1:                 ;Если положительное значение
-    pop cx                       ;Считываем размерность массива
+Positive_value1:                 ;Р•СЃР»Рё РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
+    pop cx                       ;РЎС‡РёС‚С‹РІР°РµРј СЂР°Р·РјРµСЂРЅРѕСЃС‚СЊ РјР°СЃСЃРёРІР°
     mov size_,bx
     
     jmp End_input_element
@@ -323,7 +323,7 @@ Uncorrect_value1:
     call Output_string_proc
         
     mov ax, '$' 
-    mov dx, offset buffer1       ;Занесение конца строки
+    mov dx, offset buffer1       ;Р—Р°РЅРµСЃРµРЅРёРµ РєРѕРЅС†Р° СЃС‚СЂРѕРєРё
     mov cx, 9               
                
 End_input_element:
@@ -345,29 +345,29 @@ start:
     mov dx, offset Enter_array_str                
     call Output_string_proc 
     
-    mov cx, size_                ;Передаем в регист счетчика размер массива
+    mov cx, size_                ;РџРµСЂРµРґР°РµРј РІ СЂРµРіРёСЃС‚ СЃС‡РµС‚С‡РёРєР° СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°
     mov di, 0  
     
 Entering_number: 
-    xor bx, bx                  ;Обнуляем значение регистра базы 
+    xor bx, bx                  ;РћР±РЅСѓР»СЏРµРј Р·РЅР°С‡РµРЅРёРµ СЂРµРіРёСЃС‚СЂР° Р±Р°Р·С‹ 
     
     mov ah, 0Ah     
-    mov offset buffer, buf_size ;Выделяем под буфер максимальный размер
+    mov offset buffer, buf_size ;Р’С‹РґРµР»СЏРµРј РїРѕРґ Р±СѓС„РµСЂ РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ
     mov dx, offset buffer
-    int 21h                     ;Вводим строку
+    int 21h                     ;Р’РІРѕРґРёРј СЃС‚СЂРѕРєСѓ
     
-    push cx                     ;Заносим в стек размер массива
+    push cx                     ;Р—Р°РЅРѕСЃРёРј РІ СЃС‚РµРє СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°
     mov dx, 0   
     mov si, 2 
-    cmp buffer[si], 0Dh          ;Проверка на конец строки
+    cmp buffer[si], 0Dh          ;РџСЂРѕРІРµСЂРєР° РЅР° РєРѕРЅРµС† СЃС‚СЂРѕРєРё
     je Uncorrect_value 
-    cmp buffer[si], '-'         ;Если встретился минус
+    cmp buffer[si], '-'         ;Р•СЃР»Рё РІСЃС‚СЂРµС‚РёР»СЃСЏ РјРёРЅСѓСЃ
     je If_minus  
-    cmp buffer[si], '0'         ;Если пустая или конец
+    cmp buffer[si], '0'         ;Р•СЃР»Рё РїСѓСЃС‚Р°СЏ РёР»Рё РєРѕРЅРµС†
     je only_zero_check 
     jmp Validating_value  
     
-If_minus:                       ;Если встретился минус
+If_minus:                       ;Р•СЃР»Рё РІСЃС‚СЂРµС‚РёР»СЃСЏ РјРёРЅСѓСЃ
     inc si
     cmp buffer[si], 0Dh
     je Uncorrect_value
@@ -375,44 +375,44 @@ If_minus:                       ;Если встретился минус
     je Next_byte 
     jmp Validating_value  
     
-only_zero_check:                ;Если встретился нуль или конец
-    cmp buffer[si+1], 0Dh        ;Если не конец строки
+only_zero_check:                ;Р•СЃР»Рё РІСЃС‚СЂРµС‚РёР»СЃСЏ РЅСѓР»СЊ РёР»Рё РєРѕРЅРµС†
+    cmp buffer[si+1], 0Dh        ;Р•СЃР»Рё РЅРµ РєРѕРЅРµС† СЃС‚СЂРѕРєРё
     jne Next_byte 
-    xor bx, bx                  ;Обнуление регистра
+    xor bx, bx                  ;РћР±РЅСѓР»РµРЅРёРµ СЂРµРіРёСЃС‚СЂР°
     mov bl, buffer[si] 
     sub bl, 30h 
     mov array[di], bx   
     
     mov ah, 2
-    mov dl, bl                  ;Запись символа в dl
+    mov dl, bl                  ;Р—Р°РїРёСЃСЊ СЃРёРјРІРѕР»Р° РІ dl
     int 21h
     
-    add di, 2                   ;Шаг в 2 байта
+    add di, 2                   ;РЁР°Рі РІ 2 Р±Р°Р№С‚Р°
     loop Entering_number  
      
-Validating_value:               ;Проверка полученного числа
+Validating_value:               ;РџСЂРѕРІРµСЂРєР° РїРѕР»СѓС‡РµРЅРЅРѕРіРѕ С‡РёСЃР»Р°
     cmp buffer[si], 0dh
     je Number_processing
-    cmp buffer[si], '9'         ;Если аскикод символа больше 9
+    cmp buffer[si], '9'         ;Р•СЃР»Рё Р°СЃРєРёРєРѕРґ СЃРёРјРІРѕР»Р° Р±РѕР»СЊС€Рµ 9
     jg Uncorrect_value
-    cmp buffer[si], '0'         ;Если аскикод символа меньше 0
+    cmp buffer[si], '0'         ;Р•СЃР»Рё Р°СЃРєРёРєРѕРґ СЃРёРјРІРѕР»Р° РјРµРЅСЊС€Рµ 0
     jl Uncorrect_value
-    inc dx                      ;Инкрементируем число байтов числа
+    inc dx                      ;РРЅРєСЂРµРјРµРЅС‚РёСЂСѓРµРј С‡РёСЃР»Рѕ Р±Р°Р№С‚РѕРІ С‡РёСЃР»Р°
        
-Next_byte:                      ;Следующий байт
+Next_byte:                      ;РЎР»РµРґСѓСЋС‰РёР№ Р±Р°Р№С‚
     inc si
     jmp Validating_value   
     
-Number_processing:              ;Обработка числа
+Number_processing:              ;РћР±СЂР°Р±РѕС‚РєР° С‡РёСЃР»Р°
      cmp dx, 5
-     jl Small_number            ;Если меньше 5 символов
+     jl Small_number            ;Р•СЃР»Рё РјРµРЅСЊС€Рµ 5 СЃРёРјРІРѕР»РѕРІ
      mov si, 2 
-     cmp buffer[si], '-'        ;Если перед числом не минус
+     cmp buffer[si], '-'        ;Р•СЃР»Рё РїРµСЂРµРґ С‡РёСЃР»РѕРј РЅРµ РјРёРЅСѓСЃ
      jne If_positivie_number    
-     inc si                     ;Если отрицательное число 
+     inc si                     ;Р•СЃР»Рё РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ С‡РёСЃР»Рѕ 
      
-If_positivie_number:            ;Если положительное число
-     cmp buffer[si], '3'        ;Посимвольное сравнение буфера
+If_positivie_number:            ;Р•СЃР»Рё РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ С‡РёСЃР»Рѕ
+     cmp buffer[si], '3'        ;РџРѕСЃРёРјРІРѕР»СЊРЅРѕРµ СЃСЂР°РІРЅРµРЅРёРµ Р±СѓС„РµСЂР°
      jg Uncorrect_value
      jl Small_number
      inc si
@@ -437,69 +437,69 @@ If_positivie_number:            ;Если положительное число
      jle Small_number 
          
 Small_number: 
-    mov cx, dx                  ;Передвем кол-во байт числа
+    mov cx, dx                  ;РџРµСЂРµРґРІРµРј РєРѕР»-РІРѕ Р±Р°Р№С‚ С‡РёСЃР»Р°
     dec dx
     mov si, 2 
     
-    cmp buffer[si], '-'         ;Сравниваем с минусом
-    jne Check_on_zero           ;Если не минус
+    cmp buffer[si], '-'         ;РЎСЂР°РІРЅРёРІР°РµРј СЃ РјРёРЅСѓСЃРѕРј
+    jne Check_on_zero           ;Р•СЃР»Рё РЅРµ РјРёРЅСѓСЃ
     inc si
    
     cmp buffer[si], '0'                    
-    jne Convertation_on_number  ;Если не нуль
+    jne Convertation_on_number  ;Р•СЃР»Рё РЅРµ РЅСѓР»СЊ
     inc si
    
     jmp Convertation_on_number   
     
 Check_on_zero:    
     cmp buffer[si], '0'
-    jne Convertation_on_number  ;Если не нулевое
+    jne Convertation_on_number  ;Р•СЃР»Рё РЅРµ РЅСѓР»РµРІРѕРµ
     inc si 
                            ;/*----------------convertation---------------*/
-Convertation_on_number:         ;Конвертация
-    cmp buffer[si], 0Dh         ;Если достигнут конец буффера
-    je Сonversion_completion
-    xor ax, ax                  ;Обнуление регистра
-    mov al, buffer[si]          ;Запись символа
-    sub ax, 30h                 ;Отнимаем аски символ 0
+Convertation_on_number:         ;РљРѕРЅРІРµСЂС‚Р°С†РёСЏ
+    cmp buffer[si], 0Dh         ;Р•СЃР»Рё РґРѕСЃС‚РёРіРЅСѓС‚ РєРѕРЅРµС† Р±СѓС„С„РµСЂР°
+    je РЎonversion_completion
+    xor ax, ax                  ;РћР±РЅСѓР»РµРЅРёРµ СЂРµРіРёСЃС‚СЂР°
+    mov al, buffer[si]          ;Р—Р°РїРёСЃСЊ СЃРёРјРІРѕР»Р°
+    sub ax, 30h                 ;РћС‚РЅРёРјР°РµРј Р°СЃРєРё СЃРёРјРІРѕР» 0
    
     push cx
     mov cx, dx  
     push dx   
-    push bx                     ;Заносим в стек фактическое значение числа
+    push bx                     ;Р—Р°РЅРѕСЃРёРј РІ СЃС‚РµРє С„Р°РєС‚РёС‡РµСЃРєРѕРµ Р·РЅР°С‡РµРЅРёРµ С‡РёСЃР»Р°
     mov bx, 10  
     
-Mul_on_ten:                     ;Получение количества разрядов числа
+Mul_on_ten:                     ;РџРѕР»СѓС‡РµРЅРёРµ РєРѕР»РёС‡РµСЃС‚РІР° СЂР°Р·СЂСЏРґРѕРІ С‡РёСЃР»Р°
     cmp cx, 0
     je End_of_mul
-    mul bx                      ;Умножение AX на BX с записью в приемник
-    dec cx                      ;Уменьшение количества разрядов
+    mul bx                      ;РЈРјРЅРѕР¶РµРЅРёРµ AX РЅР° BX СЃ Р·Р°РїРёСЃСЊСЋ РІ РїСЂРёРµРјРЅРёРє
+    dec cx                      ;РЈРјРµРЅСЊС€РµРЅРёРµ РєРѕР»РёС‡РµСЃС‚РІР° СЂР°Р·СЂСЏРґРѕРІ
     jmp Mul_on_ten 
      
-End_of_mul:                     ;Завершение получения кол-ва разрядов
-    pop bx                      ;Получение значения
+End_of_mul:                     ;Р—Р°РІРµСЂС€РµРЅРёРµ РїРѕР»СѓС‡РµРЅРёСЏ РєРѕР»-РІР° СЂР°Р·СЂСЏРґРѕРІ
+    pop bx                      ;РџРѕР»СѓС‡РµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ
     pop dx                      
-    dec dx                      ;Уменьшение счетчика
+    dec dx                      ;РЈРјРµРЅСЊС€РµРЅРёРµ СЃС‡РµС‚С‡РёРєР°
     pop cx
-    inc si                      ;Инкрементируем счетчик
-    add bx, ax                  ;Прибавляем полученные аккумулятор к разрядному bx
+    inc si                      ;РРЅРєСЂРµРјРµРЅС‚РёСЂСѓРµРј СЃС‡РµС‚С‡РёРє
+    add bx, ax                  ;РџСЂРёР±Р°РІР»СЏРµРј РїРѕР»СѓС‡РµРЅРЅС‹Рµ Р°РєРєСѓРјСѓР»СЏС‚РѕСЂ Рє СЂР°Р·СЂСЏРґРЅРѕРјСѓ bx
     jmp Convertation_on_number 
                                  ;/*---------------------------------------*/
-Сonversion_completion: 
+РЎonversion_completion: 
     mov si, 2
-    cmp buffer[si], '-'         ;Если положительное число
+    cmp buffer[si], '-'         ;Р•СЃР»Рё РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ С‡РёСЃР»Рѕ
     jne Positive_value 
-    neg bx                      ;Меняет знак на противоложный
+    neg bx                      ;РњРµРЅСЏРµС‚ Р·РЅР°Рє РЅР° РїСЂРѕС‚РёРІРѕР»РѕР¶РЅС‹Р№
     
-Positive_value:                 ;Если положительное значение
-    pop cx                      ;Считываем размерность массива
-    mov array[di], bx           ;Записываем в масиив полученное число
-    add di,2                    ;Шаг 2 байта
+Positive_value:                 ;Р•СЃР»Рё РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
+    pop cx                      ;РЎС‡РёС‚С‹РІР°РµРј СЂР°Р·РјРµСЂРЅРѕСЃС‚СЊ РјР°СЃСЃРёРІР°
+    mov array[di], bx           ;Р—Р°РїРёСЃС‹РІР°РµРј РІ РјР°СЃРёРёРІ РїРѕР»СѓС‡РµРЅРЅРѕРµ С‡РёСЃР»Рѕ
+    add di,2                    ;РЁР°Рі 2 Р±Р°Р№С‚Р°
     mov ah, 2
-    mov dl, 020h                ;Пробел
+    mov dl, 020h                ;РџСЂРѕР±РµР»
     int 21h
     
-    loop Entering_number        ;Ввод пока не нуль в регистре cx
+    loop Entering_number        ;Р’РІРѕРґ РїРѕРєР° РЅРµ РЅСѓР»СЊ РІ СЂРµРіРёСЃС‚СЂРµ cx
     jmp end_insert
     
 Uncorrect_value:   
@@ -507,14 +507,14 @@ Uncorrect_value:
     call Output_string_proc
         
     mov ax, '$' 
-    mov dx, offset buffer       ;Занесение конца строки
+    mov dx, offset buffer       ;Р—Р°РЅРµСЃРµРЅРёРµ РєРѕРЅС†Р° СЃС‚СЂРѕРєРё
     mov cx, 9 
     
     pop cx
     jmp Entering_number 
                                 ;/*---------------------------------------*/
 end_insert:
-    lea si, array               ;Загружвем смещение массива
+    lea si, array               ;Р—Р°РіСЂСѓР¶РІРµРј СЃРјРµС‰РµРЅРёРµ РјР°СЃСЃРёРІР°
     lea di, array
     mov cx, size_  
     call Bubble_proc 
@@ -522,8 +522,8 @@ end_insert:
     mov dx, offset Sorted_array_str                
     call Output_string_proc  
 
-    lea di, array               ;Записанный отсортированный массив
-    mov cx, size_                ;Загружаем размер массива
+    lea di, array               ;Р—Р°РїРёСЃР°РЅРЅС‹Р№ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Р№ РјР°СЃСЃРёРІ
+    mov cx, size_                ;Р—Р°РіСЂСѓР¶Р°РµРј СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°
 
     call Output_array_proc
 
@@ -531,68 +531,68 @@ Serching_median:
     mov dx, offset Median_str                
     call Output_string_proc
     
-    mov ax, size_               ;Передача размера массива
-    xor dx, dx                  ;Очистка регистра записи остатка
-    mov bx, 2                   ;Делитель
-    div bx                      ;Делим на ах с записью в приёмник
-                                ;Остаток записывается в dx
+    mov ax, size_               ;РџРµСЂРµРґР°С‡Р° СЂР°Р·РјРµСЂР° РјР°СЃСЃРёРІР°
+    xor dx, dx                  ;РћС‡РёСЃС‚РєР° СЂРµРіРёСЃС‚СЂР° Р·Р°РїРёСЃРё РѕСЃС‚Р°С‚РєР°
+    mov bx, 2                   ;Р”РµР»РёС‚РµР»СЊ
+    div bx                      ;Р”РµР»РёРј РЅР° Р°С… СЃ Р·Р°РїРёСЃСЊСЋ РІ РїСЂРёС‘РјРЅРёРє
+                                ;РћСЃС‚Р°С‚РѕРє Р·Р°РїРёСЃС‹РІР°РµС‚СЃСЏ РІ dx
     cmp dx, 1
                    
-    je Odd_value                ;Если есть остаток
+    je Odd_value                ;Р•СЃР»Рё РµСЃС‚СЊ РѕСЃС‚Р°С‚РѕРє
       
-    mul bx                      ;Получение индекса средних элементов
+    mul bx                      ;РџРѕР»СѓС‡РµРЅРёРµ РёРЅРґРµРєСЃР° СЃСЂРµРґРЅРёС… СЌР»РµРјРµРЅС‚РѕРІ
     mov di, ax     
-    mov ax, array[di]           ;Запись в регисты значения с массива,в ах записывается старшее число
+    mov ax, array[di]           ;Р—Р°РїРёСЃСЊ РІ СЂРµРіРёСЃС‚С‹ Р·РЅР°С‡РµРЅРёСЏ СЃ РјР°СЃСЃРёРІР°,РІ Р°С… Р·Р°РїРёСЃС‹РІР°РµС‚СЃСЏ СЃС‚Р°СЂС€РµРµ С‡РёСЃР»Рѕ
     mov bx, array[di-2]
     cmp ax, bx 
     
-    je Even_value               ;Если значения равны
+    je Even_value               ;Р•СЃР»Рё Р·РЅР°С‡РµРЅРёСЏ СЂР°РІРЅС‹
     xor dx, dx
    
-    cmp ax, 0                   ;Сравнение правого числа с нуленом
-    jl Check_left               ;Если правое меньше нуля
+    cmp ax, 0                   ;РЎСЂР°РІРЅРµРЅРёРµ РїСЂР°РІРѕРіРѕ С‡РёСЃР»Р° СЃ РЅСѓР»РµРЅРѕРј
+    jl Check_left               ;Р•СЃР»Рё РїСЂР°РІРѕРµ РјРµРЅСЊС€Рµ РЅСѓР»СЏ
     cmp bx, 0               
-    jle Add_numbers             ;Если левое число меньше или равно нуля
-    jmp Sub_positive_numbers    ;Если оба больше нуля
+    jle Add_numbers             ;Р•СЃР»Рё Р»РµРІРѕРµ С‡РёСЃР»Рѕ РјРµРЅСЊС€Рµ РёР»Рё СЂР°РІРЅРѕ РЅСѓР»СЏ
+    jmp Sub_positive_numbers    ;Р•СЃР»Рё РѕР±Р° Р±РѕР»СЊС€Рµ РЅСѓР»СЏ
                  
 Check_left:                     ;
-    cmp bx, 0                   ;Если больше или равно
+    cmp bx, 0                   ;Р•СЃР»Рё Р±РѕР»СЊС€Рµ РёР»Рё СЂР°РІРЅРѕ
     jge Add_numbers                    
     jmp Sub_positive_numbers                
                                     
-Add_numbers:                    ;Прибавление                                       
-     neg bx                     ;тк bx отрицательное   
+Add_numbers:                    ;РџСЂРёР±Р°РІР»РµРЅРёРµ                                       
+     neg bx                     ;С‚Рє bx РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ   
      cmp ax, bx                     
-     jl print_minus             ;Если полученное значение bx больше ax
+     jl print_minus             ;Р•СЃР»Рё РїРѕР»СѓС‡РµРЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ bx Р±РѕР»СЊС€Рµ ax
                       
-back:                           ;Если ax больше   
-     neg bx                     ;Перевод в доп код
+back:                           ;Р•СЃР»Рё ax Р±РѕР»СЊС€Рµ   
+     neg bx                     ;РџРµСЂРµРІРѕРґ РІ РґРѕРї РєРѕРґ
      add ax, bx                 
          
 Signed_:                                  
      neg ax                          
-     js Signed_                 ;Проверка на знак     
+     js Signed_                 ;РџСЂРѕРІРµСЂРєР° РЅР° Р·РЅР°Рє     
      mov bx, 2                      
-     idiv bx                    ;Деление со знаком    
+     idiv bx                    ;Р”РµР»РµРЅРёРµ СЃРѕ Р·РЅР°РєРѕРј    
      push dx                        
      jmp Even_value                
                                     
-Sub_positive_numbers:           ;Вычитание     
+Sub_positive_numbers:           ;Р’С‹С‡РёС‚Р°РЅРёРµ     
     cmp ax, bx                      
                                     
 ax_bx:                              
-    sub ax, bx                  ;Вычитание из большего числа меньшее    
+    sub ax, bx                  ;Р’С‹С‡РёС‚Р°РЅРёРµ РёР· Р±РѕР»СЊС€РµРіРѕ С‡РёСЃР»Р° РјРµРЅСЊС€РµРµ    
     push bx                         
     mov bx, 2                       
-    idiv bx                     ;Деление со знаком     
+    idiv bx                     ;Р”РµР»РµРЅРёРµ СЃРѕ Р·РЅР°РєРѕРј     
     pop bx                          
-    add ax, bx                  ;Сложение младшей полученной части с bx    
+    add ax, bx                  ;РЎР»РѕР¶РµРЅРёРµ РјР»Р°РґС€РµР№ РїРѕР»СѓС‡РµРЅРЅРѕР№ С‡Р°СЃС‚Рё СЃ bx    
     cmp dx, 1                       
-    jne not_add_1               ;Если четное    
+    jne not_add_1               ;Р•СЃР»Рё С‡РµС‚РЅРѕРµ    
 
 add_1:                           
     cmp ax, 0                       
-    jg not_add_1                ;Если большн нуля, то не прибавляется единица    
+    jg not_add_1                ;Р•СЃР»Рё Р±РѕР»СЊС€РЅ РЅСѓР»СЏ, С‚Рѕ РЅРµ РїСЂРёР±Р°РІР»СЏРµС‚СЃСЏ РµРґРёРЅРёС†Р°    
     inc ax                          
 
 not_add_1:                         
@@ -602,7 +602,7 @@ not_add_1:
 print_minus:                        
     push ax                         
     push dx                         
-    mov ah, 2                   ;Добавление минуса    
+    mov ah, 2                   ;Р”РѕР±Р°РІР»РµРЅРёРµ РјРёРЅСѓСЃР°    
     mov dl, '-'                     
     int 21h                         
     pop dx                          
@@ -610,39 +610,39 @@ print_minus:
 jmp back                            
 ;jmp Even_value                  
     
-Odd_value:                      ;Если размер массива нечетное число
+Odd_value:                      ;Р•СЃР»Рё СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР° РЅРµС‡РµС‚РЅРѕРµ С‡РёСЃР»Рѕ
     mov dx, 0  
     push dx
     mov med_num, ax             
-    mul  bx                     ;Получение индекса среднего элемента
+    mul  bx                     ;РџРѕР»СѓС‡РµРЅРёРµ РёРЅРґРµРєСЃР° СЃСЂРµРґРЅРµРіРѕ СЌР»РµРјРµРЅС‚Р°
     mov di, ax     
-    mov ax, array[di]           ;Запись среднего элемента в регистр
+    mov ax, array[di]           ;Р—Р°РїРёСЃСЊ СЃСЂРµРґРЅРµРіРѕ СЌР»РµРјРµРЅС‚Р° РІ СЂРµРіРёСЃС‚СЂ
      
-Even_value:                     ;Если размер массива четное число
-     mov bx, ax                 ;Получение значения медианы
-     cmp bx, 0                  ;Если  не нуль
+Even_value:                     ;Р•СЃР»Рё СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР° С‡РµС‚РЅРѕРµ С‡РёСЃР»Рѕ
+     mov bx, ax                 ;РџРѕР»СѓС‡РµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ РјРµРґРёР°РЅС‹
+     cmp bx, 0                  ;Р•СЃР»Рё  РЅРµ РЅСѓР»СЊ
      jne Check_on_positive 
 
 Zero_result:   
      mov dl, bl
      mov ah, 2
-     add dl, 30h                ;Запись нуля из dl
+     add dl, 30h                ;Р—Р°РїРёСЃСЊ РЅСѓР»СЏ РёР· dl
      int 21h 
     
      jmp Print_remainder        
       
-add_minus1:                     ;Если медиана отрицательное число
+add_minus1:                     ;Р•СЃР»Рё РјРµРґРёР°РЅР° РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ С‡РёСЃР»Рѕ
       push ax   
       mov ah, 2
-      mov dl, '-'               ;Добавление минуса
+      mov dl, '-'               ;Р”РѕР±Р°РІР»РµРЅРёРµ РјРёРЅСѓСЃР°
       int 21h 
       
       pop ax 
       jmp sign21  
       
 Check_on_positive:  
-      neg ax                     ;Получение флага SF
-      jns add_minus1             ;Если нету минуса
+      neg ax                     ;РџРѕР»СѓС‡РµРЅРёРµ С„Р»Р°РіР° SF
+      jns add_minus1             ;Р•СЃР»Рё РЅРµС‚Сѓ РјРёРЅСѓСЃР°
       neg ax
        
                                   ;/*---------------------------------------*/
@@ -650,48 +650,48 @@ sign21:
       neg bx
       js sign21
       mov si, 0       
-      xor dx, dx                 ;Обнуление остатка
+      xor dx, dx                 ;РћР±РЅСѓР»РµРЅРёРµ РѕСЃС‚Р°С‚РєР°
       push bx 
-      mov bx, 10                 ;Делитель
-      mov cx, 5                  ;Получние максимального кол-ва разрядов числа
+      mov bx, 10                 ;Р”РµР»РёС‚РµР»СЊ
+      mov cx, 5                  ;РџРѕР»СѓС‡РЅРёРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ РєРѕР»-РІР° СЂР°Р·СЂСЏРґРѕРІ С‡РёСЃР»Р°
       
-size1:                           ;Получение кол-ва разрядов числа
+size1:                           ;РџРѕР»СѓС‡РµРЅРёРµ РєРѕР»-РІР° СЂР°Р·СЂСЏРґРѕРІ С‡РёСЃР»Р°
       cmp ax, 10
       jl Increment_counter_of_actual_size1
-      div bx                     ;Деление
+      div bx                     ;Р”РµР»РµРЅРёРµ
       xor dx, dx                 
-      inc si                     ;Счетчик разрядов
+      inc si                     ;РЎС‡РµС‚С‡РёРє СЂР°Р·СЂСЏРґРѕРІ
 loop size1     
       
 Increment_counter_of_actual_size1: 
     pop bx      
     inc si      
     
-Getting_number1:                 ;Получение числа
+Getting_number1:                 ;РџРѕР»СѓС‡РµРЅРёРµ С‡РёСЃР»Р°
       mov ax, bx 
-      mov cx, si                 ;Передача фактического разряда числа
+      mov cx, si                 ;РџРµСЂРµРґР°С‡Р° С„Р°РєС‚РёС‡РµСЃРєРѕРіРѕ СЂР°Р·СЂСЏРґР° С‡РёСЃР»Р°
       dec cx 
       push bx
-      mov bx, 10                 ;Делитель
+      mov bx, 10                 ;Р”РµР»РёС‚РµР»СЊ
       
-Div_on_ten1:                     ;Деление разрядов числа на 10
+Div_on_ten1:                     ;Р”РµР»РµРЅРёРµ СЂР°Р·СЂСЏРґРѕРІ С‡РёСЃР»Р° РЅР° 10
      cmp cx, 0
      je End_of_div1
      div bx
      xor dx, dx 
      loop Div_on_ten1   
      
-End_of_div1:                     ;Завершение деления
-     push ax                     ;Сохраняем значение
+End_of_div1:                     ;Р—Р°РІРµСЂС€РµРЅРёРµ РґРµР»РµРЅРёСЏ
+     push ax                     ;РЎРѕС…СЂР°РЅСЏРµРј Р·РЅР°С‡РµРЅРёРµ
      mov dl, al
      mov ah, 2
-     add dl, 30h                 ;Добаляем байт
-     int 21h                     ;Выводит полученнное значение
+     add dl, 30h                 ;Р”РѕР±Р°Р»СЏРµРј Р±Р°Р№С‚
+     int 21h                     ;Р’С‹РІРѕРґРёС‚ РїРѕР»СѓС‡РµРЅРЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
      pop ax
-     mov cx, si                  ;Передаем разрядный размер
+     mov cx, si                  ;РџРµСЂРµРґР°РµРј СЂР°Р·СЂСЏРґРЅС‹Р№ СЂР°Р·РјРµСЂ
      dec cx   
      
-Inverse_multi1:                  ;Обратное умножение 
+Inverse_multi1:                  ;РћР±СЂР°С‚РЅРѕРµ СѓРјРЅРѕР¶РµРЅРёРµ 
     cmp cx, 0                    
     je Completed_inverse_multi1
     mul bx
@@ -699,10 +699,10 @@ Inverse_multi1:                  ;Обратное умножение
       
 Completed_inverse_multi1: 
    pop bx
-   sub bx, ax                    ;Вычитание старшего разряда
+   sub bx, ax                    ;Р’С‹С‡РёС‚Р°РЅРёРµ СЃС‚Р°СЂС€РµРіРѕ СЂР°Р·СЂСЏРґР°
    dec si
    cmp si, 0
-   jne Getting_number1           ;Пока не встретился младший разряд
+   jne Getting_number1           ;РџРѕРєР° РЅРµ РІСЃС‚СЂРµС‚РёР»СЃСЏ РјР»Р°РґС€РёР№ СЂР°Р·СЂСЏРґ
    
 Print_remainder: 
     pop dx                         ;
@@ -712,7 +712,7 @@ Print_remainder:
     mov dx, offset remainder               
     call Output_string_proc
    
-Close_program:                    ;Завершение работы
+Close_program:                    ;Р—Р°РІРµСЂС€РµРЅРёРµ СЂР°Р±РѕС‚С‹
     mov ax, 4c00h
     int 21h
     
