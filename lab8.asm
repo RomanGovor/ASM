@@ -3,16 +3,16 @@ My_segment SEGMENT
 ASSUME SS:My_segment,DS:My_segment,CS:My_segment,ES:My_segment
 .386   
 
-org 80h                                 ;Смещение 80h от начала PSP для получения парметров
-Command_length                  db ?    ;Длина командной строки
-Comand_line                     db ?    ;Сама командная строка
-org 100h                                ;Начало программы от конца PSP
+org 80h                                 ;РЎРјРµС‰РµРЅРёРµ 80h РѕС‚ РЅР°С‡Р°Р»Р° PSP РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РїР°СЂРјРµС‚СЂРѕРІ
+Command_length                  db ?    ;Р”Р»РёРЅР° РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё
+Comand_line                     db ?    ;РЎР°РјР° РєРѕРјР°РЅРґРЅР°СЏ СЃС‚СЂРѕРєР°
+org 100h                                ;РќР°С‡Р°Р»Рѕ РїСЂРѕРіСЂР°РјРјС‹ РѕС‚ РєРѕРЅС†Р° PSP
    
 ;/--------------------------start------------------------------------/   
 start: 
 	JMP Parsing_cmd_lines                 
      
-Old_interrupt_09h               dd 0    ;Адрес старого 09h
+Old_interrupt_09h               dd 0    ;РђРґСЂРµСЃ СЃС‚Р°СЂРѕРіРѕ 09h
 Buffer_to_console               db 4000 dup(0)
 File_id                         dw 0
 Filename                        db 50 dup (0)
@@ -36,37 +36,37 @@ Error_command_line_str          db 0Ah,"Error - could't get file name from cmd a
                                                         
 
 Parsing_cmd_lines:                   
-    call Getting_param_from_command_line ;Получение нового обработчика
+    call Getting_param_from_command_line ;РџРѕР»СѓС‡РµРЅРёРµ РЅРѕРІРѕРіРѕ РѕР±СЂР°Р±РѕС‚С‡РёРєР°
     call Check_file 
 
 Install_handler:	
-	cli                                 ;Запретить прерывания
+	cli                                 ;Р—Р°РїСЂРµС‚РёС‚СЊ РїСЂРµСЂС‹РІР°РЅРёСЏ
 	mov ah, 35h
-	mov al, 09h                         ;Получить в ES:BX адрес старого обработчика 09h    
+	mov al, 09h                         ;РџРѕР»СѓС‡РёС‚СЊ РІ ES:BX Р°РґСЂРµСЃ СЃС‚Р°СЂРѕРіРѕ РѕР±СЂР°Р±РѕС‚С‡РёРєР° 09h    
 	int 21h                     
 	
-	mov word ptr cs:Old_interrupt_09h,bx   ;Смещение обработчика
-	mov word ptr cs:Old_interrupt_09h+2,es ;Сегмент обработчика
+	mov word ptr cs:Old_interrupt_09h,bx   ;РЎРјРµС‰РµРЅРёРµ РѕР±СЂР°Р±РѕС‚С‡РёРєР°
+	mov word ptr cs:Old_interrupt_09h+2,es ;РЎРµРіРјРµРЅС‚ РѕР±СЂР°Р±РѕС‚С‡РёРєР°
 	
-	mov ah, 25h                         ;Установка нового обработчика
+	mov ah, 25h                         ;РЈСЃС‚Р°РЅРѕРІРєР° РЅРѕРІРѕРіРѕ РѕР±СЂР°Р±РѕС‚С‡РёРєР°
 	mov al, 09h                         
-	lea dx, New_handler                 ;Обработчика прерывания int 09h
+	lea dx, New_handler                 ;РћР±СЂР°Р±РѕС‚С‡РёРєР° РїСЂРµСЂС‹РІР°РЅРёСЏ int 09h
 	int 21h 
-	sti                                 ;Разрешить прерывания
+	sti                                 ;Р Р°Р·СЂРµС€РёС‚СЊ РїСЂРµСЂС‹РІР°РЅРёСЏ
   	
-	mov ah, 09h                         ;Резидент загружен
+	mov ah, 09h                         ;Р РµР·РёРґРµРЅС‚ Р·Р°РіСЂСѓР¶РµРЅ
 	lea dx, Resident_str                
 	int 21h 
  
-    mov dx, offset Parsing_cmd_lines    ;Адрес первого байта за резидентным участком программы
-    int 27h                             ;Завершение, но остаться резидентным
+    mov dx, offset Parsing_cmd_lines    ;РђРґСЂРµСЃ РїРµСЂРІРѕРіРѕ Р±Р°Р№С‚Р° Р·Р° СЂРµР·РёРґРµРЅС‚РЅС‹Рј СѓС‡Р°СЃС‚РєРѕРј РїСЂРѕРіСЂР°РјРјС‹
+    int 27h                             ;Р—Р°РІРµСЂС€РµРЅРёРµ, РЅРѕ РѕСЃС‚Р°С‚СЊСЃСЏ СЂРµР·РёРґРµРЅС‚РЅС‹Рј
 
 Exit_of_program:	                        
 	mov ax, 4c00h
 	int 21h
 
 ;/--------------------------------------------------------------------/
-Print_str_macro macro out_str            ;МАКРОС ПЕЧАТИ СТРОКИ
+Print_str_macro macro out_str            ;РњРђРљР РћРЎ РџР•Р§РђРўР РЎРўР РћРљР
     pusha
     mov ah,09h
     mov dx,offset out_str
@@ -75,81 +75,81 @@ Print_str_macro macro out_str            ;МАКРОС ПЕЧАТИ СТРОКИ
 endm                                                                               
 
 ;/-----------------------------------------------------------------/
-Getting_param_from_command_line proc     ;ПОЛУЧЕНИЕ ПАРАМЕТРОВ ИЗ КОМАНДНОЙ СТРОКИ
-    cld                                  ;Обнуление флага переноса
-	mov bp, sp      	                 ;Сохранение текущей позиции стека bp
+Getting_param_from_command_line proc     ;РџРћР›РЈР§Р•РќРР• РџРђР РђРњР•РўР РћР’ РР— РљРћРњРђРќР”РќРћР™ РЎРўР РћРљР
+    cld                                  ;РћР±РЅСѓР»РµРЅРёРµ С„Р»Р°РіР° РїРµСЂРµРЅРѕСЃР°
+	mov bp, sp      	                 ;РЎРѕС…СЂР°РЅРµРЅРёРµ С‚РµРєСѓС‰РµР№ РїРѕР·РёС†РёРё СЃС‚РµРєР° bp
 	mov cl, Command_length                   
-	cmp cl, 1                            ;Если не переданы параметры
+	cmp cl, 1                            ;Р•СЃР»Рё РЅРµ РїРµСЂРµРґР°РЅС‹ РїР°СЂР°РјРµС‚СЂС‹
 	jnle Pars  
 	
-	Print_str_macro Error_command_line_str  ;Отображение ошибки
+	Print_str_macro Error_command_line_str  ;РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РѕС€РёР±РєРё
 	jmp Exit_of_program
 
 Pars:
 	mov cx, -1
-	mov di, offset Comand_line           ;Передача командной строки
+	mov di, offset Comand_line           ;РџРµСЂРµРґР°С‡Р° РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё
 
 Skip_spaces_:
 	mov al, ' '                          
-	repz scasb                           ;Сканирование командной строки, пока в ней пробелы
-    cmp [si], 0Dh                        ;Пока не конец строки
+	repz scasb                           ;РЎРєР°РЅРёСЂРѕРІР°РЅРёРµ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё, РїРѕРєР° РІ РЅРµР№ РїСЂРѕР±РµР»С‹
+    cmp [si], 0Dh                        ;РџРѕРєР° РЅРµ РєРѕРЅРµС† СЃС‚СЂРѕРєРё
 	je End_getting_param
     
 Inc_count_param:	
-	dec di                               ;Начало параметра
+	dec di                               ;РќР°С‡Р°Р»Рѕ РїР°СЂР°РјРµС‚СЂР°
 	push di                             
-	inc word ptr Count_args              ;Инкрементирование числа параметров
-	cmp Count_args, 2                    ;Проверка на число аргументов
+	inc word ptr Count_args              ;РРЅРєСЂРµРјРµРЅС‚РёСЂРѕРІР°РЅРёРµ С‡РёСЃР»Р° РїР°СЂР°РјРµС‚СЂРѕРІ
+	cmp Count_args, 2                    ;РџСЂРѕРІРµСЂРєР° РЅР° С‡РёСЃР»Рѕ Р°СЂРіСѓРјРµРЅС‚РѕРІ
 	je Error_par
-	mov si, di                           ;Получение начало строки с файлом
+	mov si, di                           ;РџРѕР»СѓС‡РµРЅРёРµ РЅР°С‡Р°Р»Рѕ СЃС‚СЂРѕРєРё СЃ С„Р°Р№Р»РѕРј
 	
 Get_symbol_by_symbol:
-	lodsb                                ;Запись из  DS:SI
-	cmp al, 0Dh                          ;Пока не конец строки
+	lodsb                                ;Р—Р°РїРёСЃСЊ РёР·  DS:SI
+	cmp al, 0Dh                          ;РџРѕРєР° РЅРµ РєРѕРЅРµС† СЃС‚СЂРѕРєРё
 	je End_getting_param
-	cmp al, ' '                          ;Пока не пробел
+	cmp al, ' '                          ;РџРѕРєР° РЅРµ РїСЂРѕР±РµР»
 	jne Get_symbol_by_symbol
 
-If_end_param:                            ;Если конец параметра	
+If_end_param:                            ;Р•СЃР»Рё РєРѕРЅРµС† РїР°СЂР°РјРµС‚СЂР°	
 	dec si                               
-	mov byte ptr [si], 0                 ;Занесение 0 в конец
+	mov byte ptr [si], 0                 ;Р—Р°РЅРµСЃРµРЅРёРµ 0 РІ РєРѕРЅРµС†
 	mov di, si
 	inc di
 	jmp Skip_spaces_
 	
-End_getting_param:                       ;Завершение получение параметров
+End_getting_param:                       ;Р—Р°РІРµСЂС€РµРЅРёРµ РїРѕР»СѓС‡РµРЅРёРµ РїР°СЂР°РјРµС‚СЂРѕРІ
 	dec si
 	mov byte ptr [si], 0
 
-Copy_filename:                           ;Получение имени файла
+Copy_filename:                           ;РџРѕР»СѓС‡РµРЅРёРµ РёРјРµРЅРё С„Р°Р№Р»Р°
 	mov cx, 50
 	pop si
 	lea di, Filename
 	repne movsb	   
 	ret
 
-Error_par:                              ;В случае ошибки параметра
+Error_par:                              ;Р’ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё РїР°СЂР°РјРµС‚СЂР°
     Print_str_macro Error_with_arguments_str
 	jmp Exit_of_program
 		
 Getting_param_from_command_line endp
 
 ;/----------------------------------------------------------------------/ 
-New_handler proc                ;НОВЫЙ ОБРАБОТЧИК
-	pushF                       ;Сохранение флагов в стек
-	call cs:Old_interrupt_09h   ;Вызов системного обр. прер. 09h   
-	cli                         ;Запрет прерываний
+New_handler proc                ;РќРћР’Р«Р™ РћР‘Р РђР‘РћРўР§РРљ
+	pushF                       ;РЎРѕС…СЂР°РЅРµРЅРёРµ С„Р»Р°РіРѕРІ РІ СЃС‚РµРє
+	call cs:Old_interrupt_09h   ;Р’С‹Р·РѕРІ СЃРёСЃС‚РµРјРЅРѕРіРѕ РѕР±СЂ. РїСЂРµСЂ. 09h   
+	cli                         ;Р—Р°РїСЂРµС‚ РїСЂРµСЂС‹РІР°РЅРёР№
 	pusha
 
-    mov ah, 01h                 ;Проверка на наличие символов в буфере
+    mov ah, 01h                 ;РџСЂРѕРІРµСЂРєР° РЅР° РЅР°Р»РёС‡РёРµ СЃРёРјРІРѕР»РѕРІ РІ Р±СѓС„РµСЂРµ
     int 16h
    
     mov bh, ah                  
     jz Return_handler
    
-    mov ah, 02h                 ;Чтение состояния shift-клавиш
+    mov ah, 02h                 ;Р§С‚РµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ shift-РєР»Р°РІРёС€
     int 16h
-    and al, 4                   ;3 бит маски векторов(CTRL)
+    and al, 4                   ;3 Р±РёС‚ РјР°СЃРєРё РІРµРєС‚РѕСЂРѕРІ(CTRL)
     cmp al, 0
     je Return_handler
    
@@ -158,20 +158,20 @@ New_handler proc                ;НОВЫЙ ОБРАБОТЧИК
     mov ah, 00h
     int 16h      	 
 	 
-	mov ax,0B800h               ;Получение адреса экрана
-	mov ds,ax                   ;Получение адреса для пересылки DS:SI   
+	mov ax,0B800h               ;РџРѕР»СѓС‡РµРЅРёРµ Р°РґСЂРµСЃР° СЌРєСЂР°РЅР°
+	mov ds,ax                   ;РџРѕР»СѓС‡РµРЅРёРµ Р°РґСЂРµСЃР° РґР»СЏ РїРµСЂРµСЃС‹Р»РєРё DS:SI   
 	
 	mov ax, cs
 	mov es, ax
 
-	mov di, offset Buffer_to_console   ;Копирование консоли
+	mov di, offset Buffer_to_console   ;РљРѕРїРёСЂРѕРІР°РЅРёРµ РєРѕРЅСЃРѕР»Рё
 	xor si, si
-	mov cx, 2000                ;Размера экрана 80х25 
+	mov cx, 2000                ;Р Р°Р·РјРµСЂР° СЌРєСЂР°РЅР° 80С…25 
 	rep movsw
 
 Work_with_file:	 
-    call Filter_buffer          ;Форматирование данных в буфере
-	call Open_file              ;Открытие файла
+    call Filter_buffer          ;Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ РґР°РЅРЅС‹С… РІ Р±СѓС„РµСЂРµ
+	call Open_file              ;РћС‚РєСЂС‹С‚РёРµ С„Р°Р№Р»Р°
 	call Set_position_in_file	
 	call Write_buff_into_file	
 	call Close_file    
@@ -183,7 +183,7 @@ Return_handler:
 	
 New_handler endp 
 ;/------------------------------------------------------------------------/
-Filter_buffer proc                  ;ФИЛЬТР БУФЕРА КОНСОЛИ
+Filter_buffer proc                  ;Р¤РР›Р¬РўР  Р‘РЈР¤Р•Р Рђ РљРћРќРЎРћР›Р
 	mov ax, cs
 	mov ds, ax
 	mov cx, 2000
@@ -191,16 +191,16 @@ Filter_buffer proc                  ;ФИЛЬТР БУФЕРА КОНСОЛИ
 	xor si, si
 	xor bl, bl  
 	
-Buffer_shaping:                     ;Формирование выходного буфера
+Buffer_shaping:                     ;Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ РІС‹С…РѕРґРЅРѕРіРѕ Р±СѓС„РµСЂР°
 	mov ah, [di]
 	mov Buffer_to_console[si], ah
-	cmp bl, 79                      ;Пока не конец строки       
+	cmp bl, 79                      ;РџРѕРєР° РЅРµ РєРѕРЅРµС† СЃС‚СЂРѕРєРё       
 	jne Next_line_buffer
-	mov byte ptr Buffer_to_console[si+1], 0Dh ;Занесение перехода на следующую строку
+	mov byte ptr Buffer_to_console[si+1], 0Dh ;Р—Р°РЅРµСЃРµРЅРёРµ РїРµСЂРµС…РѕРґР° РЅР° СЃР»РµРґСѓСЋС‰СѓСЋ СЃС‚СЂРѕРєСѓ
 	inc si
 	mov bl, -1
 	
-Next_line_buffer:                   ;Переход на следующую строку в буфере
+Next_line_buffer:                   ;РџРµСЂРµС…РѕРґ РЅР° СЃР»РµРґСѓСЋС‰СѓСЋ СЃС‚СЂРѕРєСѓ РІ Р±СѓС„РµСЂРµ
 	inc bl
 	inc si
 	add di, 2  	
@@ -210,18 +210,18 @@ loop Buffer_shaping
 Filter_buffer endp    
 
 ;/------------------------------------------------------------------------/ 
-Set_position_in_file proc           ;УСТАНОВКА ТЕКУЩЕЙ ПОЗИЦИИ В ФАЙЛЕ 
+Set_position_in_file proc           ;РЈРЎРўРђРќРћР’РљРђ РўР•РљРЈР©Р•Р™ РџРћР—РР¦РР Р’ Р¤РђР™Р›Р• 
     pusha
       
-    mov bx, File_id                 ;Передача id файла
-    mov al, 02h                     ;Указатель на конец файла
+    mov bx, File_id                 ;РџРµСЂРµРґР°С‡Р° id С„Р°Р№Р»Р°
+    mov al, 02h                     ;РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РєРѕРЅРµС† С„Р°Р№Р»Р°
     xor cx, cx                        
     xor dx, dx    
     mov ah, 42h  
     int 21h
     
-    jc Error_set                    ;Флаг CF сигнализирует об ошибке
-    jmp Success_set                 ;При успешной установки позиции
+    jc Error_set                    ;Р¤Р»Р°Рі CF СЃРёРіРЅР°Р»РёР·РёСЂСѓРµС‚ РѕР± РѕС€РёР±РєРµ
+    jmp Success_set                 ;РџСЂРё СѓСЃРїРµС€РЅРѕР№ СѓСЃС‚Р°РЅРѕРІРєРё РїРѕР·РёС†РёРё
     
 Error_set:
     Print_str_macro Error_moving_str 
@@ -233,14 +233,14 @@ Success_set:
 Set_position_in_file endp
 
 ;/-----------------------------------------------------------------/
-Close_file proc                     ;ЗАКРЫТИЕ ФАЙЛА
+Close_file proc                     ;Р—РђРљР Р«РўРР• Р¤РђР™Р›Рђ
     pusha
     
-    mov bx, File_id                 ;Идентификатор файла
+    mov bx, File_id                 ;РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„Р°Р№Р»Р°
     xor ax, ax    
     mov ah, 3Eh    
     int 21h
-    jc Close_file_fail              ;Если ошибка открытия файла
+    jc Close_file_fail              ;Р•СЃР»Рё РѕС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°
 
     popa
     ret 
@@ -253,30 +253,30 @@ Close_file_fail:
 close_file endp  
 
 ;/---------------------------------------------------------------------/
-Check_file proc                     ;ПРОВЕРКА НА НАЛИЧИЕ ФАЙЛА
+Check_file proc                     ;РџР РћР’Р•Р РљРђ РќРђ РќРђР›РР§РР• Р¤РђР™Р›Рђ
     push cx
     push ax
      
     xor cx, cx 
     mov dx, offset Filename
-    mov ah, 3Dh                     ;Функция открытия файла
-    mov al, 02h                     ;Режим записи
+    mov ah, 3Dh                     ;Р¤СѓРЅРєС†РёСЏ РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°
+    mov al, 02h                     ;Р РµР¶РёРј Р·Р°РїРёСЃРё
     int 21h 
     jc File_not
     jmp Closing	
 
-File_not:                           ;Если файл не найден 
+File_not:                           ;Р•СЃР»Рё С„Р°Р№Р» РЅРµ РЅР°Р№РґРµРЅ 
     Print_str_macro Create_file_str     
     xor cx, cx
 	lea dx, Filename
-	mov ah, 3Ch                     ;Создание файла
+	mov ah, 3Ch                     ;РЎРѕР·РґР°РЅРёРµ С„Р°Р№Р»Р°
 	mov al, 00h
 	int 21h 
     jc Create_file_fail
         
 Closing:
     mov File_id, ax 
-    call Close_file                 ;Закрытие файла
+    call Close_file                 ;Р—Р°РєСЂС‹С‚РёРµ С„Р°Р№Р»Р°
     pop ax
     pop cx         
     ret
@@ -285,31 +285,31 @@ Create_file_fail:
     Print_str_macro File_create_error_str    
     cmp ax, 03h                     
     jne Create_04h
-    Print_str_macro Path_not_found_error_str ;Путь не найден
+    Print_str_macro Path_not_found_error_str ;РџСѓС‚СЊ РЅРµ РЅР°Р№РґРµРЅ
     jmp Exit_of_program
 
 Create_04h:
     cmp ax, 04h
     jne Create_05h   
-    Print_str_macro Many_files_error_str ;Много открытых файлов
+    Print_str_macro Many_files_error_str ;РњРЅРѕРіРѕ РѕС‚РєСЂС‹С‚С‹С… С„Р°Р№Р»РѕРІ
     jmp Exit_of_program
                             
-Create_05h:                             ;Проверка на закрытый доступ
+Create_05h:                             ;РџСЂРѕРІРµСЂРєР° РЅР° Р·Р°РєСЂС‹С‚С‹Р№ РґРѕСЃС‚СѓРї
     Print_str_macro Access_denied_error_str
     jmp Exit_of_program           
     
 Check_file endp
 ;/------------------------------------------------------------------/ 
-Open_file proc                      ;ОТКРЫТИЕ ФАЙЛА АРГУМЕТОВ 
+Open_file proc                      ;РћРўРљР Р«РўРР• Р¤РђР™Р›Рђ РђР Р“РЈРњР•РўРћР’ 
     push cx
     push ax
        
     xor cx, cx 
     mov dx, offset Filename
-    mov ah, 3Dh                     ;Функция открытия файла
-    mov al, 02h                     ;Режим записи
+    mov ah, 3Dh                     ;Р¤СѓРЅРєС†РёСЏ РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°
+    mov al, 02h                     ;Р РµР¶РёРј Р·Р°РїРёСЃРё
     int 21h 
-    jc Open_file_fail               ;Если ошибка открытия файла
+    jc Open_file_fail               ;Р•СЃР»Рё РѕС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°
     	
     mov File_id, ax  
     pop ax
@@ -317,31 +317,31 @@ Open_file proc                      ;ОТКРЫТИЕ ФАЙЛА АРГУМЕТОВ
     ret 
     
 Open_file_fail:
-    Print_str_macro File_open_error_str  ;Вывод сообщения о ошибке       
-    cmp ax, 02h                     ;В ах возвращается ошибка 
+    Print_str_macro File_open_error_str  ;Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ Рѕ РѕС€РёР±РєРµ       
+    cmp ax, 02h                     ;Р’ Р°С… РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РѕС€РёР±РєР° 
     jne AX_03h
-    Print_str_macro File_not_found_str   ;Файл не найден
+    Print_str_macro File_not_found_str   ;Р¤Р°Р№Р» РЅРµ РЅР°Р№РґРµРЅ
     jmp Return_handler  
     
-AX_03h:                             ;Проверка на ошибку пути
+AX_03h:                             ;РџСЂРѕРІРµСЂРєР° РЅР° РѕС€РёР±РєСѓ РїСѓС‚Рё
     cmp ax, 03h 
     jne AX_04h  
     Print_str_macro Path_not_found_error_str
     jmp Return_handler      
     
-AX_04h:                             ;Проверка на много открытых файлов
+AX_04h:                             ;РџСЂРѕРІРµСЂРєР° РЅР° РјРЅРѕРіРѕ РѕС‚РєСЂС‹С‚С‹С… С„Р°Р№Р»РѕРІ
     cmp ax, 04h
     jne AX_05h   
     Print_str_macro Many_files_error_str
     jmp Return_handler
                             
-AX_05h:                             ;Проверка на закрытый доступ
+AX_05h:                             ;РџСЂРѕРІРµСЂРєР° РЅР° Р·Р°РєСЂС‹С‚С‹Р№ РґРѕСЃС‚СѓРї
     cmp ax, 05h
     jne AX_0Ch 
     Print_str_macro Access_denied_error_str
     jmp Return_handler      
     
-AX_0Ch:                             ;Проверка на режим доступа
+AX_0Ch:                             ;РџСЂРѕРІРµСЂРєР° РЅР° СЂРµР¶РёРј РґРѕСЃС‚СѓРїР°
     Print_str_macro Invalid_access_mode_error_str
     jmp Return_handler
     
@@ -349,30 +349,30 @@ AX_0Ch:                             ;Проверка на режим доступа
 endp                                                                 
 
 ;/------------------------------------------------------------------/
-Write_buff_into_file proc           ;ЗАПИСЬ БУФЕРА В ФАЙЛ     
+Write_buff_into_file proc           ;Р—РђРџРРЎР¬ Р‘РЈР¤Р•Р Рђ Р’ Р¤РђР™Р›     
 	mov bx, File_id
-	mov cx, 2025                    ;80х25 + 25 переходов на новую строку
+	mov cx, 2025                    ;80С…25 + 25 РїРµСЂРµС…РѕРґРѕРІ РЅР° РЅРѕРІСѓСЋ СЃС‚СЂРѕРєСѓ
 	lea dx, Buffer_to_console
-	mov ah, 40h                     ;Запись в файл
+	mov ah, 40h                     ;Р—Р°РїРёСЃСЊ РІ С„Р°Р№Р»
 	int 21h                                                   
 	
-	jc Write_file_fail              ;Если ошибка записи в файл		    
+	jc Write_file_fail              ;Р•СЃР»Рё РѕС€РёР±РєР° Р·Р°РїРёСЃРё РІ С„Р°Р№Р»		    
     ret  
      
 Write_file_fail:
-    Print_str_macro File_write_error_str  ;Вывод сообщения о ошибке       
-    cmp ax, 05h                           ;В ах возвращается ошибка 
+    Print_str_macro File_write_error_str  ;Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ Рѕ РѕС€РёР±РєРµ       
+    cmp ax, 05h                           ;Р’ Р°С… РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РѕС€РёР±РєР° 
     jne AX_06h
-    Print_str_macro Access_denied_error_str    ;Доступ запрещен
+    Print_str_macro Access_denied_error_str    ;Р”РѕСЃС‚СѓРї Р·Р°РїСЂРµС‰РµРЅ
     jmp Return_handler  
     
-AX_06h:                             ;Проверка на ошибку пути
+AX_06h:                             ;РџСЂРѕРІРµСЂРєР° РЅР° РѕС€РёР±РєСѓ РїСѓС‚Рё
     cmp ax, 06h 
-    Print_str_macro Unknown_file_id_error_str ;Неверный идентификатор 
+    Print_str_macro Unknown_file_id_error_str ;РќРµРІРµСЂРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ 
     jmp Return_handler
     ret     
 Write_buff_into_file endp      
 
 ;/-----------------------------------------------------------------/  
-My_segment ENDS                     ;Конец сегмента    
-end start                           ;Полный конец программы start 
+My_segment ENDS                     ;РљРѕРЅРµС† СЃРµРіРјРµРЅС‚Р°    
+end start                           ;РџРѕР»РЅС‹Р№ РєРѕРЅРµС† РїСЂРѕРіСЂР°РјРјС‹ start 
